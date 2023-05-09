@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="vehicle_vehicle_tree_view" model="ir.ui.view">
+        <field name="name">vehicle.vehicle.tree</field>
+        <field name="model">vehicle.vehicle</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="customer_id"/>
+                <field name="model_id"/>
+                <field name="license_plate"/>
+                <field name="chassis_number"/>
+                <field name="color"/>
+                <field name="registration_date"/>
+                <field name="manufactured_month"/>
+                <field name="manufactured_year"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="vehicle_vehicle_form_view" model="ir.ui.view">
+        <field name="name">vehicle.vehicle.form</field>
+        <field name="model">vehicle.vehicle</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group name="vehicle_details">
+                        <group>
+                            <field name="customer_id" required="1" autocomplete="off"/>
+                            <field name="model_id" required="1" autocomplete="off"/>
+                            <field name="license_plate" style="text-transform:uppercase" required="1"
+                                   autocomplete="off"/>
+                            <field name="chassis_number" style="text-transform:uppercase" required="1"
+                                   autocomplete="off"/>
+                        </group>
+                        <group>
+                            <field name="color" autocomplete="off"/>
+                            <field name="manufactured_month" autocomplete="off"/>
+                            <field name="manufactured_year" autocomplete="off"/>
+                            <field name="registration_date" placeholder="mm/dd/yyyy" autocomplete="off"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="vehicle_vehicle_search_view">
+        <field name="name">vehicle.vehicle.search</field>
+        <field name="model">vehicle.vehicle</field>
+        <field name="arch" type="xml">
+            <search string="Search Vehicle Model">
+                <field name="customer_id"/>
+                <field name="model_id"/>
+                <field name="color"/>
+                <field name="license_plate"/>
+                <field name="chassis_number"/>
+                <field name="registration_date"/>
+                <field name="manufactured_month"/>
+                <field name="manufactured_year"/>
+                <filter name="customer" string="Customer"
+                        context="{'group_by' : 'customer_id'}"/>
+                <filter name="model" string="Model"
+                        context="{'group_by' : 'model_id'}"/>
+                <filter name="color" string="Color"
+                        context="{'group_by' : 'color'}"/>
+                <filter name="manufactured_year" string="Manufactured Year"
+                        context="{'group_by' : 'manufactured_year'}"/>
+                <filter name="registration_date" string="Registration Date"
+                        context="{'group_by' : 'registration_date'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="vehicle_vehicle_action" model="ir.actions.act_window">
+        <field name="name">Vehicle</field>
+        <field name="res_model">vehicle.vehicle</field>
+        <field name="view_id" ref="vehicle_vehicle_tree_view"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="customers_menu"
+              name="Customers"
+              parent="vehicle_menu_root"
+              sequence="3"
+              groups="aspl_vehicle_repair.group_manager,aspl_vehicle_repair.group_sale_manager"/>
+
+    <menuitem id="customers_sub_menu1"
+              name="Customers"
+              parent="customers_menu"
+              sequence="2"
+              action="contacts.action_contacts"/>
+
+    <menuitem id="customers_sub_menu2"
+              name="Vehicles"
+              parent="customers_menu"
+              sequence="3"
+              action="vehicle_vehicle_action"/>
+
+</odoo>

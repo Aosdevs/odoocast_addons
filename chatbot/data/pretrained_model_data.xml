@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo noupdate="1">
+
+        <record id="chatbot_pretrained_model_assistente_sol" model="pretrained.model">
+            <field name="name">Assistente Virtual</field>
+            <field name="intent_ids"
+                   eval="[(6, 0, [ref('chatbot_intent_assistente_sol_1'),
+                                  ref('chatbot_intent_assistente_sol_2'),
+                                  ref('chatbot_intent_assistente_sol_3'),
+                                  ref('chatbot_intent_assistente_sol_4'),
+                                  ref('chatbot_intent_assistente_sol_5')])]" />
+        </record>
+
+</odoo>

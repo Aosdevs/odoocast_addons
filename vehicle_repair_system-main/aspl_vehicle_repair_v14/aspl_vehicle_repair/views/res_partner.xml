@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="res_partner_2_vehicle_work_order" model="ir.actions.act_window">
+        <field name="name">Work Order</field>
+        <field name="res_model">vehicle.work.order</field>
+        <field name="context">{'search_default_customer_id': active_id, 'default_customer_id': active_id}</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="res_partner_2_vehicle_job_card" model="ir.actions.act_window">
+        <field name="name">Job Card</field>
+        <field name="res_model">vehicle.job.card</field>
+        <field name="context">{'search_default_customer_id': active_id, 'default_customer_id': active_id}</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="res_partner_2_vehicle_appointment" model="ir.actions.act_window">
+        <field name="name">Appointment</field>
+        <field name="res_model">vehicle.appointment</field>
+        <field name="context">{'search_default_customer_id': active_id, 'default_customer_id': active_id}</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="res_partner_form_view_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.view.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button class="oe_stat_button" type="action" name="%(res_partner_2_vehicle_appointment)d"
+                        icon="fa-ticket">
+                    <field name="vehicle_appointment_count" string='Appointment' widget="statinfo"/>
+                </button>
+                <button class="oe_stat_button" type="action" name="%(res_partner_2_vehicle_job_card)d"
+                        icon="fa-book">
+                    <field string="Job Card" name="vehicle_job_card_count" widget="statinfo"/>
+                </button>
+                <button class="oe_stat_button" type="action" name="%(res_partner_2_vehicle_work_order)d"
+                        icon="fa-book">
+                    <field string="Work Order" name="vehicle_work_order_count" widget="statinfo"/>
+                </button>
+            </div>
+            <xpath expr="//notebook/page[@name='internal_notes']" position="before">
+                <page name="vehicles" string="Vehicles">
+                    <field name="vehicle_line_ids">
+                        <tree editable="bottom">
+                            <field name="license_plate" style="text-transform:uppercase" required="1"
+                                   autocomplete="off"/>
+                            <field name="chassis_number" style="text-transform:uppercase" required="1"
+                                   autocomplete="off"/>
+                            <field name="model_id" required="1" autocomplete="off"/>
+                            <field name="manufactured_month" autocomplete="off"/>
+                            <field name="manufactured_year" autocomplete="off"/>
+                            <field name="registration_date" autocomplete="off"/>
+                            <field name="color" autocomplete="off"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

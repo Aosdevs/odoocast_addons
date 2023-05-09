@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="res_config_settings_chatbot_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.chatbot.view.form</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="999"/>
+            <field name="inherit_id" ref="website_livechat.res_config_settings_view_form" />
+            <field name="arch" type="xml">
+                <div id="live_chat_install_setting" position="after">
+                    <div id="chatbot_ai_settings" class="col-12 col-md-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="has_chatbot_ai"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label string="Chatbot AI" for="has_chatbot_ai"/>
+                            <div class="text-muted">
+                                Ativar inteligência artificial nas respostas do chatbot
+                            </div>
+
+                            <div class="content-group" attrs="{'invisible': [('has_chatbot_ai', '=', False)]}">
+                                <div class="row mt16">
+                                    <label class="col-lg-3 o_light_label" string="URL Webservice" for="chatbot_service_url"/>
+                                    <field name="chatbot_service_url" attrs="{'required': [('has_chatbot_ai', '=', True)]}" placeholder="http://localhost:7788" />
+                                </div>
+                            </div>
+
+                            <div class="content-group" attrs="{'invisible': [('has_chatbot_ai', '=', False)]}">
+                                <div class="row mt16">
+                                    <label class="col-lg-3 o_light_label" string="Chatbot User" for="chatbot_user_id"/>
+                                    <field name="chatbot_user_id" attrs="{'required': [('has_chatbot_ai', '=', True)]}"  />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </field>
+        </record>
+
+        <record id="chatbot_config_settings_action" model="ir.actions.act_window">
+            <field name="name">Settings</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field name="context">{'module' : 'chatbot'}</field>
+        </record>
+
+        <menuitem
+            id="chatbot_config_settings_menu_action"
+            name="Configurações"
+            parent="menu_main_chatbot"
+            sequence="999"
+            action="chatbot_config_settings_action"
+            groups="base.group_system"/>
+</odoo>

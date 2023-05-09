@@ -1,0 +1,64 @@
+<odoo>
+
+        <record id="chatbot_intent_view_form" model="ir.ui.view">
+            <field name="name">chatbot.intent.view.form</field>
+            <field name="model">intent</field>
+            <field name="arch" type="xml">
+                <form string="Intent">
+                    <sheet string="intent">
+                        <div class="oe_title">
+                            <h2>
+                                <field name="name" placeholder="Nome do Segmento"/>
+                            </h2>
+                        </div>
+
+                        <group>
+                                <group>
+                                    <field name="description" placeholder="Descrição do segmento"/>
+                                </group>
+                                <group>
+                                    <field name="label" groups="base.group_no_one" />
+                                </group>
+                        </group>
+
+                        <group >
+                                <group colspan="4">
+                                    <label for="context"  string="Contexto de resposta"/>
+                                    <newline/>
+                                    <field name="context" nolabel="1" />
+                                </group>
+                        </group>
+
+                        <separator string="Frases para treinamento do modelo" />
+                        <field name="intent_phrase_ids" nolabel="1" />
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="chatbot_intent_view_tree" model="ir.ui.view">
+            <field name="name">chatbot.intent.view.tree</field>
+            <field name="model">intent</field>
+            <field name="arch" type="xml">
+                <tree string="Intents">
+                    <field name="name"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="chatbot_intent_action" model="ir.actions.act_window">
+            <field name="res_model">intent</field>
+            <field name="name">Intenções</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem
+                action="chatbot_intent_action"
+                id="menu_chatbot_intent_view"
+                name="Segmentos"
+                parent="menu_main_chatbot"
+                sequence="300" />
+
+</odoo>

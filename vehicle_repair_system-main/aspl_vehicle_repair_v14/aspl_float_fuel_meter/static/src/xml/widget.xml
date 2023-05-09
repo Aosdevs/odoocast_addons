@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+
+    <t t-name="FieldFuel">
+        <span class="oe_form_field" id="oe_radio_gauge_new">
+            <div id="fuelgauge"></div>
+            <div id="range-slider"></div>
+        </span><br/>
+        <span t-att-class="'oe_form_field '+widget.widget_class" t-att-style="widget.attrs.style">
+            <t t-if="widget.mode == 'edit'">
+                <input class="o_form_input"
+                       t-att-id="widget.id_for_label"
+                       type="range"
+                       style="width:202px;"
+                       t-att-min="widget.attrs.min"
+                       t-att-max="widget.attrs.max"
+                       t-att-step="widget.attrs.step"/>
+            </t>
+            <t t-if="widget.mode == 'readonly'">
+                <input class="o_form_input"
+                       t-att-id="widget.id_for_label"
+                       type="range"
+                       style="width:202px;"
+                       t-att-min="widget.attrs.min"
+                       t-att-max="widget.attrs.max"
+                       t-att-step="widget.attrs.step" disabled="disabled"/>
+            </t>
+        </span>
+    </t>
+
+</templates>

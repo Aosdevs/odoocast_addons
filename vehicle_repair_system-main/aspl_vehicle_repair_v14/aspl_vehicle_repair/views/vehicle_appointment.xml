@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="vehicle_appointment_tree_view" model="ir.ui.view">
+        <field name="name">vehicle.appointment.tree</field>
+        <field name="model">vehicle.appointment</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" decoration-bf="1"/>
+                <field name="customer_id"/>
+                <field name="vehicle_id"/>
+                <field name="schedule_date"/>
+                <field name="status"/>
+                <field name="branch_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="vehicle_appointment_form_view" model="ir.ui.view">
+        <field name="name">vehicle.appointment.form</field>
+        <field name="model">vehicle.appointment</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm" string="Confirm" class="btn-primary" type="object"
+                            attrs="{'invisible': [('status', 'not in', ['draft'])]}"/>
+                    <button name="action_drive_point" string="Create Drive Point" class="btn-primary" type="object"
+                            attrs="{'invisible': ['|',('status', 'not in', ['confirm']),('check_drive_point','=',True)]}"/>
+                    <button name="action_cancel" string="Cancel" class="btn-secondary" type="object"
+                            attrs="{'invisible': [('status', 'not in', ['draft','confirm'])]}"/>
+                    <field name="status" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box" position="inside">
+                        <button name="action_drive_point" type="object" icon="fa-car"
+                                attrs="{'invisible':[('check_drive_point','=',False)]}" class="oe_stat_button">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">Drive</span>
+                                <span class="o_stat_text">Point</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group name="vehicle_appointment_details">
+                        <group>
+                            <field name="customer_id" required="1" placeholder="Customer Name"
+                                   attrs="{'readonly':[('status','!=','draft')]}" autocomplete="off"/>
+                            <field name="vehicle_id" required="1" placeholder="Vehicle Name"
+                                   domain="[('customer_id','=',customer_id)]"
+                                   attrs="{'readonly':[('status','!=','draft')]}"
+                                   options="{'no_create': True, 'no_edit': True}"
+                                   autocomplete="off"/>
+                            <field name="company_id"
+                                   options="{'no_create':True,'no_edit':True}"
+                                   invisible="1"/>
+                            <field name="branch_id" required="1"
+                                   domain="[('company_id', '=', company_id)]"
+                                   groups="aspl_company_branch.group_multi_branches"
+                                   options="{'no_create':True,'no_edit':True, 'no_open':True}"
+                                   context="{'multi_branch': True}"
+                                   attrs="{'readonly':[('status','!=','draft')]}"/>
+                            <field name="check_drive_point" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="schedule_date" placeholder="mm/dd/yyyy"
+                                   attrs="{'readonly':[('status','!=','draft')]}" autocomplete="off"/>
+                            <field name="is_pickup" attrs="{'readonly':[('status','!=','draft')]}"/>
+                            <field name="is_dropoff" attrs="{'readonly':[('status','!=','draft')]}"/>
+                        </group>
+                        <group>
+                            <field name="symptom" attrs="{'readonly':[('status','!=','draft')]}"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="vehicle_appointment_calendar_view" model="ir.ui.view">
+        <field name="name">vehicle.appointment.calendar.view</field>
+        <field name="model">vehicle.appointment</field>
+        <field name="arch" type="xml">
+            <calendar date_start="schedule_date" color="customer_id" mode="month">
+                <field name="customer_id"/>
+                <field name="vehicle_id"/>
+                <field name="branch_id"/>
+                <field name="name"/>
+                <field name="schedule_date"/>
+                <field name="status"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="vehicle_appointment_search_view">
+        <field name="name">vehicle.appointment.search</field>
+        <field name="model">vehicle.appointment</field>
+        <field name="arch" type="xml">
+            <search string="Search Vehicle Appointment">
+                <field name="customer_id"/>
+                <field name="name"/>
+                <field name="vehicle_id"/>
+                <field name="branch_id"/>
+                <field name="schedule_date"/>
+                <field name="status"/>
+                <filter string="Draft" name="filter_draft" domain="[('status', '=', 'draft')]"/>
+                <filter string="Confirm" name="filter_confirm" domain="[('status', '=', 'confirm')]"/>
+                <filter string="Cancel" name="filter_cancel" domain="[('status', '=', 'cancel')]"/>
+                <separator/>
+                <filter string="Pick Up" name="filter_pick_up" domain="[('is_pickup', '=', '1')]"/>
+                <filter string="Drop Off" name="filter_drop_off" domain="[('is_dropoff', '=', '1')]"/>
+                <filter name="customer" string="Customer"
+                        context="{'group_by' : 'customer_id'}"/>
+                <filter name="branch" string="Branch"
+                        context="{'group_by' : 'branch_id'}"/>
+                <filter name="status" string="Status"
+                        context="{'group_by' : 'status'}"/>
+                <filter name="schedule_date" string="Schedule Date"
+                        context="{'group_by' : 'schedule_date'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="vehicle_appointment_action" model="ir.actions.act_window">
+        <field name="name">Vehicle Appointment</field>
+        <field name="res_model">vehicle.appointment</field>
+        <field name="view_id" ref="vehicle_appointment_tree_view"/>
+        <field name="view_mode">tree,form,calendar,pivot,graph</field>
+    </record>
+
+    <menuitem id="vehicle_menu_root"
+              name="Vehicle Repair"
+              sequence="3"/>
+
+    <menuitem id="appointment_menu"
+              name="Appointments"
+              parent="vehicle_menu_root"
+              sequence="2"
+              groups="aspl_vehicle_repair.group_manager,aspl_vehicle_repair.group_sale_manager"/>
+
+    <menuitem id="appointment_sub_menu1"
+              name="Appointments"
+              parent="appointment_menu"
+              sequence="2"
+              action="vehicle_appointment_action"/>
+
+</odoo>

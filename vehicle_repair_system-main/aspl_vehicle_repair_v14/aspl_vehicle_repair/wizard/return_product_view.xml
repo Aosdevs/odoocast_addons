@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record model="ir.ui.view" id="return_product_wizard_form">
+        <field name="name">return.product.wizard.view</field>
+        <field name="model">return.product.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Return Product Details">
+                <group>
+                    <field name="product_return"/>
+                </group>
+                <field name="return_product_detail_ids" attrs="{'invisible':[('product_return','!=',True)]}">
+                    <tree create="false" editable="bottom">
+                        <field name="product_id" required="1"/>
+                        <field name="return_qty"/>
+                    </tree>
+                </field>
+                <footer>
+                    <button string="Done" type="object" name="return_product" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="return_product_wizard_action" model="ir.actions.act_window">
+        <field name="name">Remove Product Wizard</field>
+        <field name="res_model">return.product.wizard</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="aspl_vehicle_repair.return_product_wizard_form"/>
+        <field name="view_mode">form</field>
+    </record>
+
+</odoo>

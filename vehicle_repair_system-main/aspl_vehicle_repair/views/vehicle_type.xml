@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="vehicle_type_tree_view" model="ir.ui.view">
+        <field name="name">vehicle.type.tree</field>
+        <field name="model">vehicle.type</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="wheel"/>
+            </tree>
+        </field>
+    </record>
+    <record id="vehicle_type_form_view" model="ir.ui.view">
+        <field name="name">vehicle.type.form</field>
+        <field name="model">vehicle.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group name="vehicle_type_details">
+                        <group>
+                            <div class="oe_title">
+                                <h1>
+                                    <label for="name" class="oe_edit_only" string="Name"/>
+                                    <field name="name" required="1" placeholder="Name" autocomplete="off"/>
+                                </h1>
+                            </div>
+                            <group/>
+                        </group>
+                        <group/>
+                        <group>
+                            <field name="wheel" autocomplete="off"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="vehicle_type_search_view">
+        <field name="name">vehicle.type.search</field>
+        <field name="model">vehicle.type</field>
+        <field name="arch" type="xml">
+            <search string="Search Vehicle Type">
+                <field name="name"/>
+                <field name="wheel"/>
+                <filter name="wheel" string="Wheels"
+                        context="{'group_by' : 'wheel'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="vehicle_type_action" model="ir.actions.act_window">
+        <field name="name">Vehicle Type</field>
+        <field name="res_model">vehicle.type</field>
+        <field name="view_id" ref="vehicle_type_tree_view"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="configuration_vehicle_sub_menu3"
+              name="Vehicle Type"
+              parent="configuration_sub_menu1"
+              sequence="4"
+              action="vehicle_type_action"/>
+</odoo>

@@ -1,0 +1,7 @@
+<odoo>
+    <template id="installment" inherit_id="website_sale.total" customize_show="True" name="Installment">
+        <xpath expr="//div[@id='cart_total']//table/tr[last()]" position="after">
+            <tr class="asaas_installment"></tr>
+        </xpath>
+    </template>
+</odoo>

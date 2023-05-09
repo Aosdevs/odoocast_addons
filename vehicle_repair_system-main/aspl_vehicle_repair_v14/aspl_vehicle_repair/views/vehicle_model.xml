@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="vehicle_model_tree_view" model="ir.ui.view">
+        <field name="name">vehicle.model.tree</field>
+        <field name="model">vehicle.model</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="type"/>
+                <field name="model_year"/>
+                <field name="manufacture_id"/>
+                <field name="seats_number"/>
+                <field name="transmission"/>
+                <field name="fuel_type"/>
+                <field name="engine_type"/>
+                <field name="engine_capacity"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="vehicle_model_form_view" model="ir.ui.view">
+        <field name="name">vehicle.model.form</field>
+        <field name="model">vehicle.model</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group name="vehicle_details">
+                        <group>
+                            <div class="oe_title">
+                                <h1>
+                                    <label for="name" class="oe_edit_only" string="Name"/>
+                                    <field name="name" required="1" placeholder="Name" autocomplete="off"/>
+                                </h1>
+                            </div>
+                            <group/>
+                        </group>
+                        <group/>
+                        <group>
+                            <field name="model_year" required="1" autocomplete="off"/>
+                            <field name="type" autocomplete="off"/>
+                            <field name="check_door" invisible="1"/>
+                            <field name="seats_number" required="1"/>
+                            <field name="doors_number" attrs="{'invisible':[('check_door', '=', False)]}"/>
+                        </group>
+                        <group>
+                            <field name="manufacture_id" autocomplete="off"/>
+                            <field name="transmission" required="1" autocomplete="off"/>
+                            <field name="fuel_type" required="1" autocomplete="off"/>
+                            <field name="engine_type" autocomplete="off"/>
+                            <field name="engine_capacity" autocomplete="off"/>
+                            <field name="max_speed" string="Max Speed" widget="speedometer" max="200"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="vehicle_model_search_view">
+        <field name="name">vehicle.model.search</field>
+        <field name="model">vehicle.model</field>
+        <field name="arch" type="xml">
+            <search string="Search Vehicle Model">
+                <field name="name"/>
+                <field name="type"/>
+                <field name="model_year"/>
+                <field name="seats_number"/>
+                <field name="doors_number"/>
+                <field name="engine_type"/>
+                <field name="engine_capacity"/>
+                <field name="manufacture_id"/>
+                <field name="transmission"/>
+                <field name="fuel_type"/>
+                <filter string="Automatic" name="filter_auto" domain="[('transmission', '=', 'auto')]"/>
+                <filter string="Manual" name="filter_manual" domain="[('transmission', '=', 'manual')]"/>
+                <separator/>
+                <filter string="Diesel" name="filter_petrol" domain="[('fuel_type', '=', 'diesel')]"/>
+                <filter string="Petrol" name="filter_diesel" domain="[('fuel_type', '=', 'petrol')]"/>
+                <filter string="Gasoline" name="filter_gas" domain="[('fuel_type', '=', 'gas')]"/>
+                <filter string="LPG" name="filter_lpg" domain="[('fuel_type', '=', 'lpg')]"/>
+                <filter string="Electric" name="filter_electric" domain="[('fuel_type', '=', 'electric')]"/>
+                <filter string="Hybrid" name="filter_hybrid" domain="[('fuel_type', '=', 'hybrid')]"/>
+                <filter name="type" string="Type"
+                        context="{'group_by' : 'type'}"/>
+                <filter name="model_year" string="Model Year"
+                        context="{'group_by' : 'model_year'}"/>
+                <filter name="seats_number" string="Seats Capacity"
+                        context="{'group_by' : 'seats_number'}"/>
+                <filter name="fuel_type" string="Fuel Type"
+                        context="{'group_by' : 'fuel_type'}"/>
+                <filter name="transmission" string="Transmission"
+                        context="{'group_by' : 'transmission'}"/>
+                <filter name="manufacture_id" string="Manufacture"
+                        context="{'group_by' : 'manufacture_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="vehicle_model_action" model="ir.actions.act_window">
+        <field name="name">Vehicle Model</field>
+        <field name="res_model">vehicle.model</field>
+        <field name="view_id" ref="vehicle_model_tree_view"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

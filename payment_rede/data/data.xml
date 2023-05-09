@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="payment_acquirer_asaas_boleto" model="payment.acquirer">
+            <field name="name">ASAAS Boleto</field>
+            <field name="provider">asaas</field>
+            <field name="asaas_type">BOLETO</field>
+            <field name="display_as">Boleto</field>
+            <field name="image_128" type="base64" file="payment_asaas/static/description/icon.png"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="view_template_id" ref="asaas_payment_button"/>
+            <field name="pre_msg">
+                <![CDATA[ <p>O parcelamento em boleto estará sujeito a análise!</p> ]]>
+            </field>
+            <field name="pending_msg">
+                <![CDATA[ <p>O seu pedido foi processado e está Aguardando Pagamento.</p> ]]>
+            </field>
+            <field name="done_msg">
+                <![CDATA[ <p>O seu pedido foi pago.</p> ]]>
+            </field>
+            <field name="cancel_msg">
+                <![CDATA[ <p>O seu pagamento foi cancelado.</p> ]]>
+            </field>
+            <field name="description" type="html">
+                <ul class="list-inline">
+                    <li><i class="fa fa-check"/>eCommerce</li>
+                    <li><i class="fa fa-check"/>Botão de pagamento em cotações online</li>
+                </ul>
+            </field>
+        </record>
+
+        <record id="payment_acquirer_asaas_pix" model="payment.acquirer">
+            <field name="name">ASAAS Pix</field>
+            <field name="provider">asaas</field>
+            <field name="asaas_type">UNDEFINED</field>
+            <field name="display_as">PIX</field>
+            <field name="image_128" type="base64" file="payment_asaas/static/description/icon.png"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="view_template_id" ref="asaas_payment_button"/>
+            <field name="pre_msg">
+                <![CDATA[ <p>Todas as comprar via PIX serão à vista!</p> ]]>
+            </field>
+            <field name="pending_msg">
+                <![CDATA[ <p>O seu pedido foi processado e está Aguardando Pagamento.</p> ]]>
+            </field>
+            <field name="done_msg">
+                <![CDATA[ <p>O seu pedido foi pago.</p> ]]>
+            </field>
+            <field name="cancel_msg">
+                <![CDATA[ <p>O seu pagamento foi cancelado.</p> ]]>
+            </field>
+            <field name="description" type="html">
+                <ul class="list-inline">
+                    <li><i class="fa fa-check"/>eCommerce</li>
+                    <li><i class="fa fa-check"/>Botão de pagamento em cotações online</li>
+                </ul>
+            </field>
+        </record>
+
+        <record id="payment_acquirer_asaas_cartao" model="payment.acquirer">
+            <field name="name">ASAAS Cartão de Crédito</field>
+            <field name="provider">asaas</field>
+            <field name="asaas_type">CREDIT_CARD</field>
+            <field name="display_as">Cartão de Crédito</field>
+            <field name="image_128" type="base64" file="payment_asaas/static/description/icon.png"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="view_template_id" ref="asaas_payment_button"/>
+            <field name="registration_view_template_id" ref="asaas_credit_card_template"/>
+            <field name="payment_flow">s2s</field>
+            <field name="pending_msg">
+                <![CDATA[ <p>O seu pedido foi processado e está Aguardando Pagamento.</p> ]]>
+            </field>
+            <field name="done_msg">
+                <![CDATA[ <p>O seu pedido foi pago.</p> ]]>
+            </field>
+            <field name="cancel_msg">
+                <![CDATA[ <p>O seu pagamento foi cancelado.</p> ]]>
+            </field>
+            <field name="description" type="html">
+                <ul class="list-inline">
+                    <li><i class="fa fa-check"/>eCommerce</li>
+                    <li><i class="fa fa-check"/>Botão de pagamento em cotações online</li>
+                </ul>
+            </field>
+        </record>
+
+    </data>
+</odoo>

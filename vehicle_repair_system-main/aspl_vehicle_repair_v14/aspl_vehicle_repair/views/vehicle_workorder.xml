@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="work_order_2_invoice_draft" model="ir.actions.act_window">
+        <field name="name">Invoices</field>
+        <field name="res_model">account.move</field>
+        <field name="context">{'search_default_work_order_id': active_id, 'default_work_order_id': active_id}</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="work_order_2_stock" model="ir.actions.act_window">
+        <field name="name">Stock Records</field>
+        <field name="res_model">stock.picking</field>
+        <field name="context">{'search_default_work_order_id': active_id, 'default_work_order_id': active_id}</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <record id="vehicle_work_order_tree_view" model="ir.ui.view">
+        <field name="name">vehicle.work.order.tree</field>
+        <field name="model">vehicle.work.order</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" decoration-bf="1"/>
+                <field name="customer_id"/>
+                <field name="vehicle_id"/>
+                <field name="job_card_id"/>
+                <field name="technician_id"/>
+                <field name="manager_id"/>
+                <field name="branch_id"/>
+                <field name="status" decoration-bf="status=='draft'"
+                       decoration-info="status == 'progress'"
+                       decoration-success="status == 'completed'"
+                       decoration-warning="status == 'cancel','pause'"
+                       widget="badge"/>
+                <field name="currency_id" invisible="1"/>
+<!--                <field name="amount_total" decoration-bf="1" widget="monetary"/>-->
+            </tree>
+        </field>
+    </record>
+
+    <record id="vehicle_work_order_form_view" model="ir.ui.view">
+        <field name="name">vehicle.work.order.form</field>
+        <field name="model">vehicle.work.order</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_progress" string="Start" class="btn-primary" type="object"
+                            attrs="{'invisible': [('status', 'not in', ['draft','pause'])]}"/>
+                    <button name="%(aspl_vehicle_repair.add_product_wizard_action)d" string="Add Product"
+                            class="btn-secondary" type="action"
+                            attrs="{'invisible': [('status', 'not in', ['progress'])]}"/>
+                    <button name="action_pause" string="Pause" class="btn-secondary" type="object"
+                            attrs="{'invisible': [('status', 'not in', ['progress'])]}"/>
+                    <button name="action_completed" string="Complete" class="btn-primary" type="object"
+                            attrs="{'invisible': [('status', 'not in', ['progress'])]}"/>
+                    <field name="is_invoice_create" invisible="1"/>
+                    <button name="create_invoices" string="Create Invoice" class="btn-primary" type="object"
+                            attrs="{'invisible': ['|', ('status', 'not in', ['completed']), ('is_invoice_create', '=', True)]}"/>
+                    <button name="action_cancel" string="Cancel" class="btn-secondary" type="object"
+                            attrs="{'invisible': [('status', 'not in', ['progress','draft'])]}"/>
+
+                    <field name="status" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box" position="inside">
+                        <button class="oe_stat_button" type="action"
+                                name="%(aspl_vehicle_repair.work_order_2_invoice_draft)d"
+                                icon="fa-pencil-square-o" attrs="{'invisible':[('vehicle_invoice_count','=',0)]}">
+                            <field name="vehicle_invoice_count" string='Invoices' widget="statinfo"/>
+                        </button>
+                        <button class="oe_stat_button" type="action" name="%(aspl_vehicle_repair.work_order_2_stock)d"
+                                icon="fa-wrench" attrs="{'invisible':[('stock_transfer_count','=',0)]}">
+                            <field name="stock_transfer_count" string='Recipt' widget="statinfo"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group name="vehicle_work_order_details">
+                        <group>
+                            <field name="job_card_id" required="1" placeholder="Job Card Name"
+                                   domain="[('status','=','confirm')]" context="{'jobcard': True}"
+                                   attrs="{'readonly':[('status','!=','draft')]}" autocomplete="off"/>
+                            <field name="customer_id" attrs="{'readonly':[('status','!=','draft')]}"
+                                   autocomplete="off"/>
+                            <field name="vehicle_id" required="1" placeholder="Vehicle Name"
+                                   attrs="{'readonly':[('status','!=','draft')]}" autocomplete="off"/>
+                            <field name="package_id" placeholder="Package Name"
+                                   attrs="{'readonly':[('status','!=','draft')]}" autocomplete="off"/>
+                        </group>
+                        <group>
+                            <field name="technician_id" placeholder="Technician"
+                                   attrs="{'readonly':[('status','!=','draft')]}" autocomplete="off" autofocus="True"/>
+                            <field name="manager_id" placeholder="Manager"
+                                   attrs="{'readonly':[('status','!=','draft')]}" autocomplete="off"/>
+                            <field name="company_id"
+                                   options="{'no_create':True,'no_edit':True}"
+                                   invisible="1"/>
+                            <field name="branch_id" required="1"
+                                   domain="[('company_id', '=', company_id)]"
+                                   groups="aspl_company_branch.group_multi_branches"
+                                   options="{'no_create':True,'no_edit':True, 'no_open': True}"
+                                   context="{'multi_branch': True}"
+                                   attrs="{'readonly':[('status','!=','draft')]}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="vehicle_work_order_parts" string="Vehicle Parts">
+                            <field name="parts_ids" attrs="{'readonly':[('status','!=', 'draft')]}">
+                                <tree editable="bottom">
+                                    <field name="product_id" required="1" autocomplete="off"/>
+                                    <field name="quantity" required="1"/>
+                                    <field name="qty_available"/>
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="price" widget="monetary"/>
+                                    <field name="amount_subtotal" readonly="1" widget="monetary"/>
+                                </tree>
+                                <form>
+                                    <group name="vehicle_work_order_parts_details">
+                                        <group>
+                                            <field name="work_order_id" options="{'no_open': True}"/>
+                                            <field name="product_id"/>
+                                        </group>
+                                        <group>
+                                            <field name="quantity"/>
+                                            <field name="qty_available"/>
+                                            <field name="currency_id" invisible="1"/>
+                                            <field name="price" widget="monetary"/>
+                                            <field name="company_id" invisible="1"/>
+                                            <field name="amount_subtotal"/>
+                                            <field name="branch_id"/>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="currency_id" invisible="1"/>
+                                <field name="amount_parts" widget="monetary" readonly="1"
+                                       string="Total Parts Amount"/>
+                            </group>
+                        </page>
+
+                        <page name="vehicle_work_order_consume_parts" string="Consume Parts">
+                            <field name="consume_parts_ids" attrs="{'readonly':[('status','!=', 'draft')]}">
+                                <tree editable="bottom">
+                                    <field name="product_id" required="1" autocomplete="off"/>
+                                    <field name="quantity" required="1"/>
+                                    <field name="consume_qty"/>
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="price" widget="monetary"/>
+                                    <field name="amount_subtotal" readonly="1" widget="monetary"/>
+                                </tree>
+                                <form>
+                                    <group name="vehicle_work_order_consume_parts_details">
+                                        <group>
+                                            <field name="work_order_id" options="{'no_open': True}"/>
+                                            <field name="product_id"/>
+                                        </group>
+                                        <group>
+                                            <field name="quantity"/>
+                                            <field name="currency_id" invisible="1"/>
+                                            <field name="price" widget="monetary"/>
+                                            <field name="company_id" invisible="1"/>
+                                            <field name="amount_subtotal"/>
+                                            <field name="branch_id"/>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="currency_id" invisible="1"/>
+                                <field name="amount_total_parts" widget="monetary" readonly="1"
+                                       string="Total Consume Parts Amount"/>
+                            </group>
+                        </page>
+
+                        <page name="vehicle_work_order_labor" string="Vehicle Labors">
+                            <field name="labor_ids" attrs="{'readonly':[('status','not in', ['draft','progress'])]}">
+                                <tree editable="bottom">
+                                    <field name="labor_id" required="1" autocomplete="off"/>
+                                    <field name="hours" widget='float_time' required="1"/>
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="rate" widget="monetary"/>
+                                    <field name="amount" readonly="1" widget="monetary"/>
+                                </tree>
+                                <form>
+                                    <group name="vehicle_work_order_labor_details">
+                                        <group>
+                                            <field name="work_order_id" options="{'no_open': True}"/>
+                                            <field name="labor_id"/>
+                                            <field name="company_id" invisible="1"/>
+                                            <field name="branch_id"/>
+                                        </group>
+                                        <group>
+                                            <field name="hours" widget='float_time'/>
+                                            <field name="currency_id" invisible="1"/>
+                                            <field name="rate" widget="monetary"/>
+                                            <field name="amount" widget="monetary"/>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="currency_id" invisible="1"/>
+                                <field name="amount_total_labor" readonly="1" widget="monetary"
+                                       string="Total Labor Amount"/>
+                            </group>
+                        </page>
+                        <page name="note" string="Notes">
+                            <group>
+                                <group>
+                                    <field name="note"
+                                           attrs="{'readonly':[('status','not in', ['draft','progress'])]}"/>
+                                </group>
+                                <group/>
+                            </group>
+                        </page>
+                    </notebook>
+                    <group/>
+                    <group class="oe_subtotal_footer oe_right">
+                        <div class="oe_subtotal_footer_separator oe_inline"/>
+                        <field name="currency_id" invisible="1"/>
+<!--                        <field name="amount_total" widget="monetary" nolabel="0" readonly="1"-->
+<!--                               class="oe_subtotal_footer_separator"/>-->
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="vehicle_work_order_search_view">
+        <field name="name">vehicle.work.order.search</field>
+        <field name="model">vehicle.work.order</field>
+        <field name="arch" type="xml">
+            <search string="Search Vehicle Work Order">
+                <field name="customer_id"/>
+                <field name="job_card_id"/>
+                <field name="name"/>
+                <field name="vehicle_id"/>
+                <field name="package_id"/>
+                <field name="status"/>
+                <field name="technician_id"/>
+                <field name="manager_id"/>
+                <field name="branch_id"/>
+                <filter string="Draft" name="filter_draft" domain="[('status', '=', 'draft')]"/>
+                <filter string="Progress" name="filter_process" domain="[('status', '=', 'progress')]"/>
+                <filter string="Completed" name="filter_completed" domain="[('status', '=', 'completed')]"/>
+                <filter string="Cancel" name="filter_cancel" domain="[('status', '=', 'cancel')]"/>
+                <filter name="customer" string="Customer"
+                        context="{'group_by' : 'customer_id'}"/>
+                <filter name="vehicle" string="Vehicle"
+                        context="{'group_by' : 'vehicle_id'}"/>
+                <filter name="technician" string="Technician"
+                        context="{'group_by' : 'technician_id'}"/>
+                <filter name="manager" string="Manager"
+                        context="{'group_by' : 'manager_id'}"/>
+                <filter name="status" string="Status    "
+                        context="{'group_by' : 'status'}"/>
+                <filter name="branch" string="Branch"
+                        context="{'group_by' : 'branch_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="vehicle_work_order_action" model="ir.actions.act_window">
+        <field name="name">Vehicle Work Order</field>
+        <field name="res_model">vehicle.work.order</field>
+        <field name="view_id" ref="vehicle_work_order_tree_view"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="orders_sub_menu2"
+              name="Work Orders"
+              parent="orders_menu"
+              sequence="3"
+              action="vehicle_work_order_action"/>
+
+    <menuitem id="configuration_sub_menu3"
+              name="Work Order"
+              parent="configuration_menu"
+              sequence="4"/>
+</odoo>

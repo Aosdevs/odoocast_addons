@@ -1,0 +1,28 @@
+<odoo>
+
+        <record id="chatbot_intent_phrase_view_tree" model="ir.ui.view">
+            <field name="name">chatbot.intent.phrase.view.tree</field>
+            <field name="model">intent.phrase</field>
+            <field name="arch" type="xml">
+                <tree string="Intents" class="tree_no_open o_label_nowrap"  editable="bottom">
+                    <field name="text"/>
+                    <field name="preview_answer" class="my_class"/>
+                    <button name="button_preview_answer" string="Buscar resposta" type="object" class="oe_highlight"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="chatbot_intent_phrase_action" model="ir.actions.act_window">
+            <field name="res_model">intent.phrase</field>
+            <field name="name">Intenções</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem
+                action="chatbot_intent_phrase_action"
+                id="menu_chatbot_intent_phrase_view"
+                name="Frases"
+                parent="menu_main_chatbot"
+                sequence="400" />
+
+</odoo>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="promotion_from_view" model="ir.ui.view">
+            <field name="name">Promotion Form View</field>
+            <field name="model">promotion.promotion</field>
+            <field name="arch" type="xml">
+                <form string="Promotion">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object"
+                                    class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button"
+                                       options='{"terminology": "archive"}'/>
+                            </button>
+                        </div>
+                        <group>
+                            <field name="promotion_code" required="1"/>
+                            <field name="promotion_type" required="1"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group col="4">
+                            <field name="from_date"/>
+                            <field name="to_date"/>
+                        </group>
+                        <!--						<group col="4">-->
+                        <!--							<field name="from_time"/>-->
+                        <!--							<field name="to_time"/>-->
+                        <!--						</group>-->
+                        <notebook>
+                            <page name="buy_x_get_y_free" string="Condition" attrs="{'invisible':[('promotion_type',
+								'!=','buy_x_get_y')]}" autofocus="True">
+                                <field name="free_product_condition_ids">
+                                    <tree editable="bottom">
+                                        <field name="product_x_id"/>
+                                        <field name="operator"/>
+                                        <field name="quantity"/>
+                                        <field name="product_y_id"/>
+                                        <field name="quantity_y"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="promotion_tree_view" model="ir.ui.view">
+            <field name="name">Promotion tree View</field>
+            <field name="model">promotion.promotion</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="promotion_code"/>
+                    <field name="promotion_type"/>
+                    <field name="from_date"/>
+                    <field name="to_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id='promotion_view_action' model='ir.actions.act_window'>
+            <field name='name'>Promotion</field>
+            <field name="res_model">promotion.promotion</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="promotion_main_menu"
+                  name="Promotions"
+                  parent="aspl_vehicle_repair.configuration_menu"
+                  sequence="6"/>
+
+        <menuitem id="promotion_menu"
+                  name="Promotions"
+                  parent="promotion_main_menu"
+                  action="promotion_view_action"/>
+
+    </data>
+</odoo>

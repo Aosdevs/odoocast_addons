@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-name="payment_asaas.asaas_installment_template">
+        <td colspan="3" class="text-center text-xl-right border-0">
+        <span class=''>
+            <div class="input-group w-100">
+                <select id="installment_select" name="installment_number" class="form-control" >
+                    <t t-foreach="parcels" t-as="parcel">
+                        <option t-att-value="parcel[0]" t-att-selected="current_parcels == parcel[0] or null"><t t-esc="parcel[0]" />x sem juros de R$ <t t-esc="parcel[1]" /></option>
+                    </t>
+                </select>
+            </div>
+            <t t-if="message.error">
+                <div class="alert alert-danger text-left mt16" role="alert">
+                    <t t-esc="message.error"/>
+                </div>
+            </t>
+            <t t-if="message.success">
+                <div class="alert alert-success text-left mt16" role="alert">
+                    <t t-esc="message.success"/>
+                </div>
+            </t>
+        </span>
+        </td>
+    </t>
+</templates>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="service_package_template_tree_view" model="ir.ui.view">
+        <field name="name">service.package.template.tree</field>
+        <field name="model">service.package.template</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="branch_id"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="total_amount" decoration-bf="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="service_package_template_form_view" model="ir.ui.view">
+        <field name="name">service.package.template.form</field>
+        <field name="model">service.package.template</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group name="service_package_template_details">
+                        <group>
+                            <field name="name" required="1" autocomplete="off"/>
+                            <field name="company_id"
+                                   options="{'no_create':True,'no_edit':True}"
+                                   invisible="1"/>
+                            <field name="branch_id" required="1"
+                                   domain="[('company_id', '=', company_id)]"
+                                   groups="aspl_company_branch.group_multi_branches"
+                                   options="{'no_create':True,'no_edit':True, 'no_open': True}"
+                                   context="{'multi_branch': True}"/>
+                        </group>
+                        <group/>
+                    </group>
+                    <notebook>
+                        <page name="service_parts" string="Service Parts">
+                            <field name="part_ids">
+                                <tree editable="bottom">
+                                    <field name="product_id" required="1" autocomplete="off"/>
+                                    <field name="quantity" required="1"/>
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="price" widget="monetary"/>
+                                    <field name="amount_subtotal" readonly="1" widget="monetary"/>
+                                </tree>
+                                <form>
+                                    <group name="service_package_parts_details">
+                                        <group>
+                                            <field name="package_id" options="{'no_open': True}"/>
+                                            <field name="product_id"/>
+                                        </group>
+                                        <group>
+                                            <field name="quantity"/>
+                                            <field name="price" widget="monetary"/>
+                                            <field name="company_id" invisible="1"/>
+                                            <field name="amount_subtotal"/>
+                                            <field name="branch_id"/>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="currency_id" invisible="1"/>
+                                <field name="amount_part" widget="monetary" string="Total" readonly="1"/>
+                            </group>
+                        </page>
+                        <page name="service_labor" string="Service Labor">
+                            <field name="labor_ids">
+                                <tree editable="bottom">
+                                    <field name="labor_id" required="1" autocomplete="off"/>
+                                    <field name="description"/>
+                                    <field name="hours" widget='float_time' required="1"/>
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="rate" widget="monetary"/>
+                                    <field name="amount_subtotal" readonly="1" widget="monetary"/>
+                                </tree>
+                                <form>
+                                    <group name="service_package_labor_details">
+                                        <group>
+                                            <field name="package_id" options="{'no_open': True}"/>
+                                            <field name="labor_id"/>
+                                            <field name="description"/>
+                                            <field name="company_id" invisible="1"/>
+
+                                        </group>
+                                        <group>
+                                            <field name="hours" widget='float_time'/>
+                                            <field name="currency_id" invisible="1"/>
+                                            <field name="rate" widget="monetary"/>
+                                            <field name="amount_subtotal" widget="monetary"/>
+                                            <field name="branch_id"/>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="currency_id" invisible="1"/>
+                                <field name="amount_labor" widget="monetary" string="Total" readonly="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                    <group/>
+                    <group class="oe_subtotal_footer oe_right">
+                        <div class="oe_subtotal_footer_separator oe_inline"/>
+                        <field name="currency_id" invisible="1"/>
+                        <field name="total_amount" widget="monetary" nolabel="0" readonly="1"
+                               class="oe_subtotal_footer_separator"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="service_package_template_search_view">
+        <field name="name">service.package.template.search</field>
+        <field name="model">service.package.template</field>
+        <field name="arch" type="xml">
+            <search string="Search Service Package Template ">
+                <field name="name"/>
+                <field name="branch_id"/>
+                <filter name="branch" string="Branch"
+                        context="{'group_by' : 'branch_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="service_package_template_action" model="ir.actions.act_window">
+        <field name="name">Service Package Template</field>
+        <field name="res_model">service.package.template</field>
+        <field name="view_id" ref="service_package_template_tree_view"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="products_menu"
+              name="Packages"
+              parent="vehicle_menu_root"
+              sequence="4"
+              groups="aspl_vehicle_repair.group_manager"/>
+
+    <menuitem id="products_sub_menu1"
+              name="Package Template"
+              parent="products_menu"
+              sequence="2"
+              action="service_package_template_action"/>
+
+</odoo>

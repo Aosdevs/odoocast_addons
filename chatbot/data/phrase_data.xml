@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <data noupdate="1">
+
+        <!-- Negocios -->
+        <record id="chatbot_intent_phrase_assistente_sol_11" model="intent.phrase">
+            <field name="text">O que é Sunnit?</field>
+            <field name="intent_id"  ref="chatbot_intent_assistente_sol_1" />
+        </record>
+
+        <record id="chatbot_intent_phrase_assistente_sol_12" model="intent.phrase">
+            <field name="text">Como funciona o Sunnit?</field>
+            <field name="intent_id"  ref="chatbot_intent_assistente_sol_1" />
+        </record>
+
+        <record id="chatbot_intent_phrase_assistente_sol_13" model="intent.phrase">
+            <field name="text">Qual objetivo principal?</field>
+            <field name="intent_id"  ref="chatbot_intent_assistente_sol_1" />
+        </record>
+
+        <record id="chatbot_intent_phrase_assistente_sol_14" model="intent.phrase">
+            <field name="text">Quando foi fundada a Sunnit?</field>
+            <field name="intent_id"  ref="chatbot_intent_assistente_sol_1" />
+        </record>
+
+        <record id="chatbot_intent_phrase_assistente_sol_15" model="intent.phrase">
+            <field name="text">Onde encontrar Sunnit?</field>
+            <field name="intent_id"  ref="chatbot_intent_assistente_sol_1" />
+        </record>
+
+
+        <!-- Pré Análise -->
+        <record id="chatbot_intent_phrase_assistente_sol_21" model="intent.phrase">
+            <field name="text">O que é pré-análise?</field>
+            <field name="intent_id"  ref="chatbot_intent_assistente_sol_2" />
+        </record>
+
+        <record id="chatbot_intent_phrase_assistente_sol_22" model="intent.phrase">
+            <field name="text">Posso fechar o projeto com os valores apresentados na Pré-Análise?</field>
+            <field name="intent_id"  ref="chatbot_intent_assistente_sol_2" />
+        </record>
+
+        <record id="chatbot_intent_phrase_assistente_sol_23" model="intent.phrase">
+            <field name="text">Não estou satisfeito com os valores da Pré-Análise, podemos consultar outro banco?</field>
+            <field name="intent_id"  ref="chatbot_intent_assistente_sol_2" />
+        </record>
+
+        <record id="chatbot_intent_phrase_assistente_sol_24" model="intent.phrase">
+            <field name="text">Como é feita a pré-análise?</field>
+            <field name="intent_id"  ref="chatbot_intent_assistente_sol_2" />
+        </record>
+
+        <record id="chatbot_intent_phrase_assistente_sol_25" model="intent.phrase">
+            <field name="text">Minha pré-análise foi negada, o que posso fazer?</field>
+            <field name="intent_id"  ref="chatbot_intent_assistente_sol_2" />
+        </record>
+
+
+        <!-- Processo -->
+        <record id="chatbot_intent_phrase_assistente_sol_31" model="intent.phrase">
+            <field name="text">Qual é o processo Sunnit?</field>
+            <field name="intent_id"  ref="chatbot_intent_assistente_sol_3" />
+        </record>
+
+        <record id="chatbot_intent_phrase_assistente_sol_32" model="intent.phrase">
+            <field name="text">Qual processo da sunnit?</field>
+            <field name="intent_id"  ref="chatbot_intent_assistente_sol_3" />
+        </record>
+
+        <record id="chatbot_intent_phrase_assistente_sol_33" model="intent.phrase">
+            <field name="text">Quanto tempo leva o processo Sunnit?</field>
+            <field name="intent_id"  ref="chatbot_intent_assistente_sol_3" />
+        </record>
+
+        <record id="chatbot_intent_phrase_assistente_sol_34" model="intent.phrase">
+            <field name="text">Quando os documentos são exigidos?</field>
+            <field name="intent_id"  ref="chatbot_intent_assistente_sol_3" />
+        </record>
+
+        <record id="chatbot_intent_phrase_assistente_sol_35" model="intent.phrase">
+            <field name="text">Como o processo começa?</field>
+            <field name="intent_id"  ref="chatbot_intent_assistente_sol_3" />
+        </record>
+
+
+        <!-- Parceria -->
+        <record id="chatbot_intent_phrase_assistente_sol_41" model="intent.phrase">
+            <field name="text">Quais bancos parceiros?</field>
+            <field name="intent_id"  ref="chatbot_intent_assistente_sol_4" />
+        </record>
+
+        <record id="chatbot_intent_phrase_assistente_sol_42" model="intent.phrase">
+            <field name="text">O que posso oferecer como garantia?</field>
+            <field name="intent_id"  ref="chatbot_intent_assistente_sol_4" />
+        </record>
+
+        <record id="chatbot_intent_phrase_assistente_sol_43" model="intent.phrase">
+            <field name="text">Por que devo apresentar uma garantia?</field>
+            <field name="intent_id"  ref="chatbot_intent_assistente_sol_4" />
+        </record>
+
+        <record id="chatbot_intent_phrase_assistente_sol_44" model="intent.phrase">
+            <field name="text">Quais são os principais bancos com os quais você trabalha?</field>
+            <field name="intent_id"  ref="chatbot_intent_assistente_sol_4" />
+        </record>
+
+        <record id="chatbot_intent_phrase_assistente_sol_45" model="intent.phrase">
+            <field name="text">Terei que abrir uma conta no banco que recebi a oferta escolhida?</field>
+            <field name="intent_id"  ref="chatbot_intent_assistente_sol_4" />
+        </record>
+
+    </data>
+
+</odoo>

@@ -1,0 +1,170 @@
+<odoo>
+
+    <template id="assets_frontend" inherit_id="website.assets_frontend" name="Salary Package">
+        <xpath expr="//link[last()]" position="after">
+            <link rel="stylesheet" type="text/scss" href="/payment_asaas/static/src/scss/payment_page.scss" />
+        </xpath>
+        <xpath expr="script[last()]" position="after">
+            <script type="text/javascript" src="/payment_asaas/static/src/js/payment_form.js"></script>
+            <script type="text/javascript" src="/payment_asaas/static/src/js/asaas_installment.js"></script>
+        </xpath>
+    </template>
+
+    <template id="asaas_credit_card_template" name="Template Cartao ASAAS">
+        <div class="asaas_credit_card_wrapper">
+            <input type="hidden" name="data_set" t-att-data-action-url="tx_url" data-create-route="/payment/asaas/new" data-remove-me="" />
+            <input type="hidden" name="acquirer_id" t-att-value="id" />
+            <input type="hidden" name="partner_id" t-att-value="partner_id" />
+            <div class="form-group">
+                <label for="asaas-card-holder">Nome</label>
+                <input class="form-control" name="asaas-card-holder" type="text"></input>
+                <small class="form-text text-muted">Nome como está escrito no cartão!</small>
+            </div>
+            <div class="form-group">
+                <label for="asaas-card-number">Número do Cartão</label>
+                <input class="form-control" name="asaas-card-number" type="text" placeholder="0000 0000 0000 0000"></input>
+                <small class="form-text error-text">O número do cartão é inválido!</small>
+            </div>
+            <div class="row">
+                <div class="form-group col">
+                    <label for="asaas-card-cvc">CVC</label>
+                    <input class="form-control" name="asaas-card-cvc" type="text" placeholder="000"></input>
+                </div>
+                <div class="form-group col">
+                    <label for="asaas-card-expiry">Data de Vencimento</label>
+                    <input class="form-control" name="asaas-card-expiry" type="text" placeholder="MM/YYYY"></input>
+                    <small class="form-text error-text">A Data de Vencimento é inválida!</small>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="asaas_boleto_button">
+        <form method="get" target="_self">
+            <input type="hidden" name="data_set" t-att-data-action-url="checkout_url" data-remove-me="" />
+            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+            <input type="hidden" name="secure_url" t-att-value="create_request['bank_slip']['url_slip']" />
+            <input type="hidden" name="digitable_line" t-att-value="create_request['bank_slip']['digitable_line']" />
+            <input type="hidden" name="status" t-att-value="create_request['status']" />
+            <input type="hidden" name="transaction_id" t-att-value="acquirer_reference" />
+            <button type="submit" width="100px" t-att-class="submit_class">
+                <span t-if="submit_txt">
+                    <t t-esc="submit_txt" />
+                    <span class="fa fa-long-arrow-right" />
+                </span>
+            </button>
+        </form>
+    </template>
+
+    <template id="asaas_payment_button">
+        <form t-if="checkout_url" method="get" target="_self">
+            <input type="hidden" name="data_set" t-att-data-action-url="checkout_url" data-remove-me="" />
+            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+            <button type="submit" width="100px" t-att-class="submit_class">
+                <span t-if="submit_txt">
+                    <t t-esc="submit_txt" />
+                    <span class="fa fa-long-arrow-right" />
+                </span>
+            </button>
+        </form>
+    </template>
+
+    <template id="asaas_pix_info">
+        <script>
+            var copyPix = function(){
+                var pixSpan = document.getElementById('payload-to-copy');
+                if(pixSpan) navigator.clipboard.writeText(pixSpan.dataset.pix);
+            }
+        </script>
+        <img class="pix-image" t-att-src="'data:image/png;base64,{}'.format(encodedImage)" />
+        <div>
+            <strong>PIX Copia e Cola:</strong>
+            <span onclick="copyPix()" id="payload-to-copy" t-att-data-pix="payload">
+                <t t-esc="payload_display" />
+            </span>
+            <i class="fa fa-copy" />
+        </div>
+        <span class="tooltiptext">Clique para copiar</span>
+        <p>
+            <strong>Data de Expiração:</strong>
+            <t t-esc="expirationDate" />
+        </p>
+    </template>
+
+    <template id="asaas_boleto_info">
+        <script>
+            var copyLinhaDigitavel = function(){
+                var pixSpan = document.getElementById('payload-to-copy');
+                if(pixSpan) navigator.clipboard.writeText(pixSpan.dataset.pix);
+            }
+        </script>
+        <a class="btn btn-primary btn-print-boleto" target="_blank" t-att-href="boleto_url">Clique para Imprimir o Boleto</a>
+        <div>
+            <strong>Linha Digitável:</strong>
+            <span onclick="copyLinhaDigitavel()" id="payload-to-copy" t-att-data-pix="identificationField">
+                <t t-esc="identificationField" />
+            </span>
+            <i class="fa fa-copy" />
+        </div>
+        <span class="tooltiptext">Clique para copiar</span>
+    </template>
+
+    <template id="asaas_payment_info_page">
+        <t t-call="website.layout">
+            <t t-set="additional_title">Informações de Pagamento</t>
+            <t t-set="no_footer">1</t>
+            <div id="wrap">
+                <div class="container oe_website_sale asaas_payment_page">
+                    <div class="payment-header">
+                        <h3>Informações de Pagamento</h3>
+                    </div>
+                    <div class="payment-info">
+                        <t t-if="pix">
+                            <t t-call="payment_asaas.asaas_pix_info" />
+                        </t>
+                        <t t-else="">
+                            <t t-call="payment_asaas.asaas_boleto_info" />
+                        </t>
+                        <div class="button-right">
+                            <a class="btn btn-primary" href="/shop/confirmation/asaas">Confirmar</a>
+                        </div>
+                    </div>
+                    <div class="cart_summary">
+                        <t t-call="website_sale.cart_summary" />
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <record id="payment_acquirer_asaas_form" model="ir.ui.view">
+        <field name="name">payment.acquirer.asaas.form</field>
+        <field name="model">payment.acquirer</field>
+        <field name="inherit_id" ref="payment.acquirer_form" />
+        <field name="arch" type="xml">
+            <field name="provider" position="after">
+                <field name="asaas_type" attrs="{'invisible': [('provider', '!=', 'asaas')]}" />
+            </field>
+            <group name="acquirer" position="inside">
+                <group>
+                    <field name="asaas_access_token" attrs="{'invisible': [('provider', '!=', 'asaas')]}" password="1" />
+                </group>
+            </group>
+        </field>
+    </record>
+
+    <record id="payment_transaction_asaas_form" model="ir.ui.view">
+        <field name="name">payment.transaction.asaas.form</field>
+        <field name="model">payment.transaction</field>
+        <field name="inherit_id" ref="payment.transaction_form" />
+        <field name="arch" type="xml">
+            <header position="inside">
+                <field name="asaas_can_be_refunded" invisible="1" />
+                <button type="object" name="check_asaas_payment_state" string="Consultar Status" class="oe_highlight"/>
+                <button type="object" name="refund_asaas_payment" string="Estornar Cobrança" class="oe_highlight"
+                    attrs="{'invisible': [('asaas_can_be_refunded', '=', False)]}"/>
+            </header>
+        </field>
+    </record>
+
+</odoo>

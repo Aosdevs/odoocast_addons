@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.actions.server" id="action_create_asaas_customer">
+        <field name="name">Criar Cliente ASAAS</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="binding_model_id" ref="base.model_res_partner" />
+        <field name="state">code</field>
+        <field name="code">
+for rec in records:
+    rec.create_asaas_customer()
+        </field>
+    </record>
+
+    <record model="ir.actions.server" id="action_create_asaas_wallet">
+        <field name="name">Criar Wallet ASAAS</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="binding_model_id" ref="base.model_res_partner" />
+        <field name="state">code</field>
+        <field name="code">
+for rec in records:
+    rec.with_context(raise_error=True).create_asaas_wallet()
+        </field>
+    </record>
+
+    <record id="res_partner_asaas" model="ir.ui.view">
+        <field name="name">res.partner.asaas</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <group name="misc" position="after">
+                <group name="asaas" string="ASAAS">
+                    <field name="asaas_customer_id" />
+                    <field name="asaas_wallet_id" />
+                </group>
+            </group>
+        </field>
+    </record>
+</odoo>

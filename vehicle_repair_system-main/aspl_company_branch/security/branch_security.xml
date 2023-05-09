@@ -1,0 +1,186 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <record model="res.groups" id="group_multi_branches">
+            <field name="name">Multi Branches</field>
+            <field name="category_id" ref="base.module_category_usability" />
+        </record>
+
+    </data>
+
+    <!-- Multi - Company Rules -->
+
+    <!--<data>-->
+        <!-- Sale order Multi Branch -->
+        <!--<record model="ir.rule" id="sale_order_branch_rule">-->
+            <!--<field name="name">Sales Order Mutli Branch</field>-->
+            <!--<field name="model_id" ref="model_sale_order" />-->
+            <!--<field name="global" eval="True" />-->
+            <!--<field name="domain_force">['|','|',('branch_id','=',False),('branch_id','child_of',[user.branch_id.id]),-->
+                                    <!--('branch_id', 'in', [x.id for x in user.branch_ids])]</field>-->
+        <!--</record>-->
+
+        <!--<record model="ir.rule" id="sale_order_line_branch_rule">-->
+            <!--<field name="name">Sales Order Line Branch</field>-->
+            <!--<field name="model_id" ref="model_sale_order_line" />-->
+            <!--<field name="global" eval="True" />-->
+            <!--<field name="domain_force">['|','|',('branch_id','=',False),('branch_id','child_of',[user.branch_id.id]),-->
+                                       <!--('branch_id', 'in', [x.id for x in user.branch_ids])]</field>-->
+        <!--</record>-->
+
+        <!-- Purchase order Multi Branch -->
+        <!--<record model="ir.rule" id="purchase_order_branch_rule">-->
+            <!--<field name="name">Purchase Order Mutli Branch</field>-->
+            <!--<field name="model_id" ref="model_purchase_order" />-->
+            <!--<field name="global" eval="True" />-->
+            <!--<field name="domain_force">['|','|',('branch_id','=',False),('branch_id','child_of',[user.branch_id.id]),-->
+                                       <!--('branch_id', 'in', [x.id for x in user.branch_ids])]</field>-->
+        <!--</record>-->
+
+        <!--<record model="ir.rule" id="purchase_order_line_branch_rule">-->
+            <!--<field name="name">Purchase Order Line Branch</field>-->
+            <!--<field name="model_id" ref="model_purchase_order_line" />-->
+            <!--<field name="global" eval="True" />-->
+            <!--<field name="domain_force">['|','|',('branch_id','=',False),('branch_id','child_of',[user.branch_id.id]),-->
+                                       <!--('branch_id', 'in', [x.id for x in user.branch_ids])]</field>-->
+        <!--</record>-->
+
+        <!-- Account Invoice Multi Branch -->
+        <!--<record model="ir.rule" id="account_invoice_branch_rule">-->
+            <!--<field name="name">Invoice Mutli Branch</field>-->
+            <!--<field name="model_id" ref="model_account_invoice" />-->
+            <!--<field name="global" eval="True" />-->
+            <!--<field name="domain_force">['|','|',('branch_id','=',False),('branch_id','child_of',[user.branch_id.id]),-->
+                                       <!--('branch_id', 'in', [x.id for x in user.branch_ids])]</field>-->
+        <!--</record>-->
+
+        <!--<record model="ir.rule" id="account_invoice_line_branch_rule">-->
+            <!--<field name="name">Invoice Line Branch</field>-->
+            <!--<field name="model_id" ref="model_account_invoice_line" />-->
+            <!--<field name="global" eval="True" />-->
+            <!--<field name="domain_force">['|','|',('branch_id','=',False),('branch_id','child_of',[user.branch_id.id]),-->
+                                       <!--('branch_id', 'in', [x.id for x in user.branch_ids])]</field>-->
+        <!--</record>-->
+
+        <!-- Account Payment Multi Branch -->
+        <!--<record model="ir.rule" id="account_payment_branch_rule">-->
+            <!--<field name="name">Account Payment Mutli Branch</field>-->
+            <!--<field name="model_id" ref="model_account_payment" />-->
+            <!--<field name="global" eval="True" />-->
+            <!--<field name="domain_force">['|','|',('branch_id','=',False),('branch_id','child_of',[user.branch_id.id]),-->
+                                       <!--('branch_id', 'in', [x.id for x in user.branch_ids])]</field>-->
+        <!--</record>-->
+
+        <!--&lt;!&ndash; Stock Picking Multi Branch &ndash;&gt;-->
+        <!--<record model="ir.rule" id="stock_picking_branch_rule">-->
+            <!--<field name="name">stock picking multi Branch</field>-->
+            <!--<field name="model_id" search="[('model','=','stock.picking')]" model="ir.model" />-->
+            <!--<field name="global" eval="True" />-->
+            <!--<field name="domain_force">['|','|',('branch_id','=',False),('branch_id','child_of',[user.branch_id.id]),-->
+                                       <!--('branch_id', 'in', [x.id for x in user.branch_ids])]</field>-->
+        <!--</record>-->
+
+        <!-- Stock Move Multi Branch -->
+        <!--<record model="ir.rule" id="stock_picking_branch_rule">-->
+            <!--<field name="name">stock move multi Branch</field>-->
+            <!--<field name="model_id" search="[('model','=','stock.move')]" model="ir.model" />-->
+            <!--<field name="global" eval="True" />-->
+            <!--<field name="domain_force">['|','|',('branch_id','=',False),('branch_id','child_of',[user.branch_id.id]),-->
+                                       <!--('branch_id', 'in', [x.id for x in user.branch_ids])]</field>-->
+        <!--</record>-->
+
+        <!-- Account Move Multi Branch -->
+        <!--<record model="ir.rule" id="account_move_branch_rule">-->
+            <!--<field name="name">Account Move multi Branch</field>-->
+            <!--<field name="model_id" ref="model_account_move" />-->
+            <!--<field name="global" eval="True" />-->
+            <!--<field name="domain_force">['|','|',('branch_id','=',False),('branch_id','child_of',[user.branch_id.id]),-->
+                                       <!--('branch_id', 'in', [x.id for x in user.branch_ids])]</field>-->
+        <!--</record>-->
+
+        <!-- Account Move line Multi Branch -->
+        <!--<record model="ir.rule" id="account_move_line_branch_rule">-->
+            <!--<field name="name">Account Move line multi Branch</field>-->
+            <!--<field name="model_id" ref="model_account_move_line" />-->
+            <!--<field name="global" eval="True" />-->
+            <!--<field name="domain_force">['|','|',('branch_id','=',False),('branch_id','child_of',[user.branch_id.id]),-->
+                                       <!--('branch_id', 'in', [x.id for x in user.branch_ids])]</field>-->
+        <!--</record>-->
+
+        <!-- Account Invoice analysis Multi Branch -->
+        <!--<record id="invoice_analysis_branch_rule" model="ir.rule">-->
+            <!--<field name="name">Invoice Analysis Branch Rule</field>-->
+            <!--<field name="model_id" ref="model_account_invoice_report" />-->
+            <!--<field name="global" eval="True" />-->
+            <!--<field name="domain_force">['|','|',('branch_id','=',False),('branch_id','child_of',[user.branch_id.id]),-->
+                                       <!--('branch_id', 'in', [x.id for x in user.branch_ids])]</field>-->
+        <!--</record>-->
+
+        <!-- Sale order analysis Multi Branch -->
+        <!--<record id="sale_order_analysis_branch_rule" model="ir.rule">-->
+            <!--<field name="name">Sales Order Analysis Branch Rule</field>-->
+            <!--<field name="model_id" ref="model_sale_report" />-->
+            <!--<field name="global" eval="True" />-->
+            <!--<field name="domain_force">['|','|',('branch_id','=',False),('branch_id','child_of',[user.branch_id.id]),-->
+                                       <!--('branch_id', 'in', [x.id for x in user.branch_ids])]</field>-->
+        <!--</record>-->
+
+        <!-- Purchase order analysis Multi Branch -->
+        <!--<record id="purchase_order_analysis_branch_rule" model="ir.rule">-->
+            <!--<field name="name">purchase Order Analysis Branch Rule</field>-->
+            <!--<field name="model_id" ref="model_purchase_report" />-->
+            <!--<field name="global" eval="True" />-->
+            <!--<field name="domain_force">['|','|',('branch_id','=',False),('branch_id','child_of',[user.branch_id.id]),-->
+                                       <!--('branch_id', 'in', [x.id for x in user.branch_ids])]</field>-->
+        <!--</record>-->
+
+        <!-- Stock Warehouse Multi Branch -->
+        <!--<record id="stock_warehouse_branch_rule" model="ir.rule">-->
+            <!--<field name="name">Warehouse Branch Rule</field>-->
+            <!--<field name="model_id" ref="model_stock_warehouse" />-->
+            <!--<field name="global" eval="True" />-->
+            <!--<field name="domain_force">['|','|',('branch_id','=',False),('branch_id','child_of',[user.branch_id.id]),-->
+                                       <!--('branch_id', 'in', [x.id for x in user.branch_ids])]</field>-->
+        <!--</record>-->
+
+        <!-- Stock Quants Multi Branch -->
+        <!--<record id="stock_quant_branch_rule" model="ir.rule">-->
+            <!--<field name="name">Stock Quant Branch Rule</field>-->
+            <!--<field name="model_id" ref="model_stock_quant" />-->
+            <!--<field name="global" eval="True" />-->
+            <!--<field name="domain_force">['|','|',('branch_id','=',False),('branch_id','child_of',[user.branch_id.id]),-->
+                                       <!--('branch_id', 'in', [x.id for x in user.branch_ids])]</field>-->
+        <!--</record>-->
+
+        <!-- Stock Location Multi Branch -->
+        <!--<record id="stock_location_branch_rule" model="ir.rule">-->
+            <!--<field name="name">Stock Location Branch Rule</field>-->
+            <!--<field name="model_id" ref="model_stock_location"/>-->
+            <!--<field name="global" eval="True" />-->
+            <!--<field name="domain_force">['|','|',('branch_id','=',False),('branch_id','child_of',[user.branch_id.id]),-->
+                                       <!--('branch_id', 'in', [x.id for x in user.branch_ids])]</field>-->
+        <!--</record>-->
+
+        <!-- Record Rule For User Branch -->
+        <!--<record id="res_users_branch_rule" model="ir.rule">-->
+            <!--<field name="name">Stock User Branch Rule</field>-->
+            <!--<field name="model_id" ref="model_res_users"/>-->
+            <!--<field name="global" eval="True" />-->
+            <!--<field name="domain_force">[('branch_id','child_of',[user.branch_id.id])]</field>-->
+        <!--</record>-->
+
+        <!-- Record Rule For Branch -->
+         <!--<record id="res_branch_rule" model="ir.rule">-->
+            <!--<field name="name">Branch Rule</field>-->
+            <!--<field name="model_id" ref="model_company_branch"/>-->
+            <!--<field eval="False" name="global"/>-->
+            <!--<field name="groups" eval="[(6, 0, [ref('base.group_user')])]"/>-->
+            <!--<field name="domain_force">['|',('id','child_of',[user.branch_id.id]),-->
+                                       <!--('id', 'in', [x.id for x in user.branch_ids])]-->
+           <!--</field>-->
+        <!--</record>-->
+
+    <!--</data>-->
+
+</odoo>

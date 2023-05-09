@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <data noupdate="1">
+
+        <record id="chatbot_intent_assistente_sol_1" model="intent">
+            <field name="name">Negócio</field>
+            <field name="description">Definições do Negócio</field>
+            <field name="context">O que é sunnit? Sunnit é uma plataforma de financiamento fotovoltaica para integradores. O principal objetivo é alcançar as melhores condições de financiamento por meio de negociações com bancos parceiros. O processo Sunnit é: os clientes cadastram e recebem Pré-Análise de Crédito para seu Projeto de Financiamento Fotovoltaico e quando há juros nos valores apresentados, a Sunnit realiza uma Análise Formal com os bancos para entregar as melhores opções de financiamento. A Sunnit funciona da seguinte forma: o Integrador registra um Projeto de Financiamento Fotovoltaico e receberá uma estimativa precisa da proposta dos bancos após uma análise de pré-crédito.</field>
+        </record>
+
+        <record id="chatbot_intent_assistente_sol_2" model="intent">
+            <field name="name">Pré-Análise</field>
+            <field name="description">Definições da Pré-Análise</field>
+            <field name="context">Pré Análise é uma estimativa das propostas de Crédito que serão oferecidas. Não é possível fechar o projeto com valores da pré-análise pois são apenas estimativas. A proposta formal não é diferente da pré-análise ficando sempre dentro da estimativa que foi apresentada na Pré-Análise. É permitido a consulta de outras opções de financiamento em outros bancos, caso não fique satisfeito com os valores da pré análise. Na Pré-Análise a consulta é feita nos principais bancos que se enquadram no seu Projeto. No caso de Pré-Análise Negada é possível conversar com um de nossos analistas para entender o que houve e se é possível reverter a situação.</field>
+        </record>
+
+        <record id="chatbot_intent_assistente_sol_3" model="intent">
+            <field name="name">Processo</field>
+            <field name="description">Características do Processo</field>
+            <field name="context">O processo tem início no integrador que cadastra um projeto de Financiamento fotovoltaíco, em seguida o cliente cadastra seus dados e a Sunnit envia uma Pré-Análise de crédito. O cliente receberá um só lugar diversas propostas de Crédito, com as melhores taxas e possibilidades de parcelamento, de forma rápida e gratuita. Os serviços da Sunnit são gratuitos tanto para o Integrador quanto para o Cliente. Os bancos aceitam como garantia Veículos e Automóveis. Uma forma boa de conseguir melhores condições é oferecer uma Garantia e/ou Avalista para o projeto. Para melhorar as taxas e obter prazos mais longos é preciso oferecer uma Garantia.</field>
+        </record>
+
+        <record id="chatbot_intent_assistente_sol_4" model="intent">
+            <field name="name">Parcerias</field>
+            <field name="description">Parcerias e garantias</field>
+            <field name="context">A sunnit tem parceria com diversos bancos e cooperativas, dentre eles estão: Santander, Safra, Finpass, Inter, GeRu, Sicoob, Sicredi. Nem sempre é necessário abrir conta no banco, porém a abertura de relacionamento pode influenciar na taxa da operação. Alguns dos bancos oferecem a opção de pagamento via boleto. Para aprovação de uma linha de crédito é necessário ter em mãos todos os documentos solicitados na plataforma. Os documentos solicitados serão de acordo com o tipo e tamanho do projeto. Só serão solicitado documentos que agentes financeiros solicitam para liberação do projeto.</field>
+        </record>
+
+        <record id="chatbot_intent_assistente_sol_5" model="intent">
+            <field name="name">Plataforma</field>
+            <field name="description">Funcionamento da plataforma</field>
+            <field name="context">A plataforma da Sunnit é criptografada para manter completo sigilo sobre a documentação dos nossos clientes e parceiros. Todos os documentos coletados só serão analisados por nossos especialistas de Crédito e pelos Agentes Financeiros que retém contrato conosco para manter total discrição.</field>
+        </record>
+
+    </data>
+
+</odoo>

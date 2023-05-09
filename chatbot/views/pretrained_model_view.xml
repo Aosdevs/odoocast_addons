@@ -1,0 +1,62 @@
+<odoo>
+
+        <record id="chatbot_pretrained_model_view_form" model="ir.ui.view">
+            <field name="name">chatbot.pretrained.model.view.form</field>
+            <field name="model">pretrained.model</field>
+            <field name="arch" type="xml">
+                <form string="pretrained">
+                    <header>
+                        <button name="button_train" string="Treinar!" type="object" class="oe_highlight"
+                                confirm="Tem certeza que gostria de iniciar o treinamento? Esse processo leva em cerca de 1 hora." />
+<!--                        <button name="multiprocessing" string="multiprocessing!" type="object" class="oe_highlight"/>-->
+                        <field name="state" widget="statusbar" />
+                    </header>
+
+                    <sheet string="pretrained">
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+
+                        <separator string="Segmentos"/>
+                        <group colspan="4">
+                            <field name="intent_ids" nolabel="1" >
+                                <tree >
+                                    <field name="label" />
+                                    <field name="name" />
+                                    <field name="description" />
+                                </tree>
+                            </field>
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="chatbot_pretrained_model_view_tree" model="ir.ui.view">
+            <field name="name">chatbot.pretrained.model.view.tree</field>
+            <field name="model">pretrained.model</field>
+            <field name="arch" type="xml">
+                <tree string="pretraineds">
+                    <field name="name"/>
+                    <field name="intent_ids"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="chatbot_pretrained_model_action" model="ir.actions.act_window">
+            <field name="res_model">pretrained.model</field>
+            <field name="name">Modelos</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem
+                action="chatbot_pretrained_model_action"
+                id="menu_chatbot_pretrained_model_view"
+                name="Modelo"
+                parent="menu_main_chatbot"
+                sequence="100" />
+
+</odoo>

@@ -1,0 +1,4 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+access_chatbot_intent_read,access_chatbot_intent_read,model_intent,,1,1,1,1
+access_chatbot_intent_phrase_read,access_chatbot_intent_phrase_read,model_intent_phrase,,1,1,1,1
+access_pretrained_model,access_pretrained_model,model_pretrained_model,base.group_user,1,1,1,1

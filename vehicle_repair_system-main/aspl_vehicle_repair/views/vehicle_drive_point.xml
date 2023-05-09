@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="vehicle_drive_point_tree_view" model="ir.ui.view">
+        <field name="name">vehicle.drive.point.tree</field>
+        <field name="model">vehicle.drive.point</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="customer_id"/>
+                <field name="appointment_id"/>
+                <field name="date"/>
+                <field name="pickup_date"/>
+                <field name="dropoff_date"/>
+                <field name="pickup_driver_id"/>
+                <field name="drop_off_driver_id"/>
+                <field name="branch_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="vehicle_drive_point_form_view" model="ir.ui.view">
+        <field name="name">vehicle.drive.point.form</field>
+        <field name="model">vehicle.drive.point</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group name="vehicle_drive_point_details">
+                        <group>
+                            <field name="appointment_id" required="1" placeholder="Appointment"
+                                   domain="[('status','=','confirm'),('check_drive_point','=',False)]"
+                                   autocomplete="off"/>
+                            <field name="customer_id" autocomplete="off"/>
+                        </group>
+                        <group>
+                            <field name="date" autocomplete="off"/>
+                            <field name="company_id"
+                                   options="{'no_create':True,'no_edit':True}"
+                                   invisible="1"/>
+                            <field name="branch_id"
+                                   domain="[('company_id', '=', company_id)]"
+                                   groups="aspl_company_branch.group_multi_branches"
+                                   options="{'no_create':True,'no_edit':True, 'no_open':True}"
+                                   context="{'multi_branch': True}"/>
+                        </group>
+                        <group>
+                            <field name="check_default_address"/>
+                        </group>
+                        <group>
+                            <field name="select_address_id"
+                                   attrs="{'invisible':[('check_default_address','=',False)],'required':[('check_default_address','=',True)]}"
+                                   domain="[('customer_id','=',customer_id),('appointment_id','!=',appointment_id)]"
+                                   autocomplete="off"/>
+                        </group>
+                        <group>
+                            <field name="check_pickup"/>
+                            <label for="pickup_street" string="Pickup Address"
+                                   attrs="{'invisible': [('check_pickup','=',False)]}"/>
+                            <div class="o_address_format" attrs="{'invisible': [('check_pickup','=',False)]}">
+                                <field name="pickup_street" placeholder="Street" class="o_address_street"/>
+                                <field name="pickup_street2" placeholder="Street2" class="o_address_street"/>
+                                <field name="pickup_city" placeholder="City" class="o_address_city"/>
+                                <field name="pickup_state_id" placeholder="State" class="o_address_state"/>
+                                <field name="pickup_zip" placeholder="Zip" class="o_address_zip"/>
+                                <field name="pickup_country_id" placeholder="Country" class="o_address_country"/>
+                            </div>
+                            <field name="pickup_date" placeholder="mm/dd/yyyy"
+                                   attrs="{'invisible': [('check_pickup','=',False)]}" autocomplete="off"/>
+                            <field name="pickup_driver_id" placeholder="Pickup Driver Name"
+                                   attrs="{'invisible': [('check_pickup','=',False)]}" autocomplete="off"/>
+                        </group>
+                        <group>
+                            <field name="check_drop_off"/>
+                            <label for="dropoff_street" string="Drop Address"
+                                   attrs="{'invisible': [('check_drop_off','=',False)]}"/>
+                            <div class="o_address_format" attrs="{'invisible': [('check_drop_off','=',False)]}">
+                                <field name="dropoff_street" placeholder="Street" class="o_address_street"/>
+                                <field name="dropoff_street2" placeholder="Street2" class="o_address_street"/>
+                                <field name="dropoff_city" placeholder="City" class="o_address_city"/>
+                                <field name="dropoff_state_id" placeholder="State" class="o_address_state"/>
+                                <field name="dropoff_zip" placeholder="ZIP" class="o_address_zip"/>
+                                <field name="dropoff_country_id" placeholder="Country" class="o_address_country"/>
+                            </div>
+                            <field name="dropoff_date" placeholder="mm/dd/yyyy"
+                                   attrs="{'invisible':[('check_drop_off','=',False)]}" autocomplete="off"/>
+                            <field name="drop_off_driver_id" placeholder=" Drop Driver Name"
+                                   attrs="{'invisible':[('check_drop_off','=',False)]}" autocomplete="off"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="vehicle_drive_point_calendar_view" model="ir.ui.view">
+        <field name="name">vehicle.drive.point.calendar.view</field>
+        <field name="model">vehicle.drive.point</field>
+        <field name="arch" type="xml">
+            <calendar date_start="date" color="customer_id" mode="month">
+                <field name="customer_id"/>
+                <field name="appointment_id"/>
+                <field name="pickup_date"/>
+                <field name="dropoff_date"/>
+                <field name="pickup_driver_id"/>
+                <field name="drop_off_driver_id"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="vehicle_drive_point_search_view">
+        <field name="name">vehicle.drive.point.search</field>
+        <field name="model">vehicle.drive.point</field>
+        <field name="arch" type="xml">
+            <search string="Search Vehicle Drive Point">
+                <field name="customer_id"/>
+                <field name="pickup_driver_id"/>
+                <field name="drop_off_driver_id"/>
+                <field name="appointment_id"/>
+                <field name="date"/>
+                <field name="pickup_date"/>
+                <field name="dropoff_date"/>
+                <field name="pickup_street"/>
+                <field name="dropoff_street"/>
+                <field name="pickup_street2"/>
+                <field name="dropoff_street2"/>
+                <field name="pickup_city"/>
+                <field name="dropoff_city"/>
+                <field name="pickup_state_id"/>
+                <field name="dropoff_state_id"/>
+                <field name="pickup_country_id"/>
+                <field name="dropoff_country_id"/>
+                <field name="pickup_zip"/>
+                <field name="dropoff_zip"/>
+                <filter string="PickUp" name="filter_pickup" domain="[('check_pickup', '=',True)]"/>
+                <filter string="Drop Off" name="filter_drop_off" domain="[('check_drop_off', '=',True)]"/>
+                <filter name="customer" string="Customer"
+                        context="{'group_by' : 'customer_id'}"/>
+                <filter name="branch" string="Branch"
+                        context="{'group_by' : 'branch_id'}"/>
+                <filter name="pickup_driver" string="Pickup Driver"
+                        context="{'group_by' : 'pickup_driver_id'}"/>
+                <filter name="drop_off_driver" string="Drop off Driver"
+                        context="{'group_by' : 'drop_off_driver_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="vehicle_drive_point_action" model="ir.actions.act_window">
+        <field name="name">Vehicle Drive Point</field>
+        <field name="res_model">vehicle.drive.point</field>
+        <field name="view_id" ref="vehicle_drive_point_tree_view"/>
+        <field name="view_mode">tree,form,calendar</field>
+    </record>
+
+    <menuitem id="appointment_sub_menu2"
+              name="Drive Point"
+              parent="appointment_menu"
+              sequence="2"
+              action="vehicle_drive_point_action"/>
+</odoo>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="stock_work_order_form">
+        <field name="name">Stock With Work Order</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="work_order_id" autocomplete="off"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="stock_work_order_search_form">
+        <field name="name">Stock Search With Work Order</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='picking_type_id']" position="after">
+                <field name="work_order_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <menuitem id="inventory_menu"
+              name="Inventory"
+              parent="vehicle_menu_root"
+              sequence="8"
+              groups="aspl_vehicle_repair.group_manager,aspl_vehicle_repair.group_inventory_manager"/>
+
+    <menuitem id="inventory_sub_menu2"
+              name="Inventory/Transfers"
+              parent="inventory_menu"
+              sequence="2"
+              action="stock.action_picking_tree_all"/>
+
+    <menuitem id="inventory_sub_menu3"
+              name="Stock Moves"
+              parent="inventory_menu"
+              sequence="3"
+              action="stock.stock_move_action"/>
+
+</odoo>
