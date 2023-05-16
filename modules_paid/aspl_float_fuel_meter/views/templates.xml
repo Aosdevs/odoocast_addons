@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="assets_backend" name="aspl_float_fuel_meter assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/aspl_float_fuel_meter/static/src/js/jquery.dynameter.js"></script>
+            <script type="text/javascript" src="/aspl_float_fuel_meter/static/src/js/widget.js"></script>
+            <link rel="stylesheet" href="/aspl_float_fuel_meter/static/src/css/jquery.dynameter.css"/>
+            <link rel="stylesheet" href="/aspl_float_fuel_meter/static/src/css/widget.css"/>
+        </xpath>
+    </template>
+
+</odoo>

@@ -1,0 +1,30 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_history_form">
+            <field name="name">history.form</field>
+            <field name="model">wedrive.history</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>Histórico de Veículos</h1>
+                        </div>
+                        <group>
+                            <field name="vehicle_id" options="{'no_create': True}" required="1"/>
+                            <field name="professional_id" options="{'no_create': True}" required="1"/>
+                            <field name="service_id" options="{'no_create': True}" required="1"/>
+                            <field name="date" required="1"/>
+                        </group>
+                        <notebook>
+                            <page string="Detalhes">
+                                <group>
+                                    <field name="description" widget="html"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="vehicle_insurance_tree_view" model="ir.ui.view">
+        <field name="name">vehicle.insurance.tree</field>
+        <field name="model">vehicle.insurance</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="vehicle_id"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="insurance_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="vehicle_insurance_form_view" model="ir.ui.view">
+        <field name="name">vehicle.insurance.form</field>
+        <field name="model">vehicle.insurance</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group name="vehicle_insurance_details">
+                        <group>
+                            <field name="vehicle_id" required="1" placeholder="Vehicle Name" autocomplete="off"/>
+                            <field name="insurance_id" required="1" placeholder="Insurance Name" autocomplete="off"/>
+                            <field name="start_date" placeholder="dd/mm/yyyy" autocomplete="off"/>
+                            <field name="end_date" placeholder="dd/mm/yyyy" autocomplete="off"/>
+                        </group>
+                        <group/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="vehicle_insurance_search_view">
+        <field name="name">vehicle.insurance.search</field>
+        <field name="model">vehicle.insurance</field>
+        <field name="arch" type="xml">
+            <search string="Search Vehicle Insurance">
+                <field name="vehicle_id"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="insurance_id"/>
+                <filter name="insurance_id" string="Insurance Company"
+                        context="{'group_by' : 'insurance_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="vehicle_insurance_action" model="ir.actions.act_window">
+        <field name="name">Vehicle Insurance</field>
+        <field name="res_model">vehicle.insurance</field>
+        <field name="view_id" ref="vehicle_insurance_tree_view"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+<!--    <menuitem id="customers_sub_menu3"-->
+    <!--              name="Insurance Companies"-->
+    <!--              parent="customers_menu"-->
+    <!--              sequence="4"-->
+    <!--              action="vehicle_insurance_action"/>-->
+
+
+</odoo>

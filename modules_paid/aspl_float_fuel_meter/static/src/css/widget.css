@@ -1,0 +1,60 @@
+#fuel-gauge-control{
+    margin-top: 24px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    zoom: 1;
+    display: inline-block;
+    height: 10px;
+    margin: 5px 1px 10px;
+    width: 199px;
+    height: 1px;
+    background-color: #333 !important;
+    background-image: none;
+}
+
+#oe_radio_gauge{
+    margin-top: 20px;
+}
+
+/*.left_notif {
+	-moz-border-radius: 50px;
+	-webkit-border-radius: 50px;
+	border-radius: 50px;
+	background: black;
+	color: white;
+	font-size: 14px;
+	padding: 5px;
+	border-top: 5px solid transparent;
+}*/
+
+#talkbubble {
+	width: 120px;
+	height: 80px;
+	background: red;
+	position: relative;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+}
+
+#talkbubble:before {
+	content: "";
+	position: absolute;
+	top: -10px;
+	width: 0;
+	height: 0;
+	border-top: 14px solid transparent;
+	border-right: 11px solid black;
+	border-bottom: 13px solid transparent;
+}
+/*.notification_val{
+	margin-left: 11px;
+	font-size: 17px;
+	background: black;
+	position: inherit;
+	padding: 3px 8px;
+	color: white;
+	border-top: 6px solid transparent;
+	border-radius: 5px;
+}*/

@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="customer_package_2_invoice_draft" model="ir.actions.act_window">
+        <field name="name">Invoices</field>
+        <field name="res_model">account.move</field>
+        <field name="context">{'search_default_customer_package_id':active_id,
+            'default_customer_package_id':active_id}
+        </field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="customer_service_package_tree_view" model="ir.ui.view">
+        <field name="name">customer.service.package.tree</field>
+        <field name="model">customer.service.package</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="customer_id" decoration-bf="1"/>
+                <field name="vehicle_id"/>
+                <field name="package_template_id"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="branch_id"/>
+                <field name="status"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="total_amount" decoration-bf="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="customer_service_package_form_view" model="ir.ui.view">
+        <field name="name">customer.service.package.form</field>
+        <field name="model">customer.service.package</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm" string="Confirm" class="btn-primary" type="object"
+                            attrs="{'invisible': [('status', 'not in', ['draft'])]}"/>
+                    <button name="action_draft" string="Set To Draft" class="btn-secondary" type="object"
+                            attrs="{'invisible': [('status', 'not in', ['cancel'])]}"/>
+                    <!--                    <button name="create_invoices" string="Create Invoice" class="btn-primary" type="object"-->
+                    <!--                            attrs="{'invisible': [('status', 'in', ['draft','cancel'])]}"/>-->
+                    <button name="action_cancel" string="Cancel" class="btn-secondary" type="object"
+                            attrs="{'invisible': [('status', 'not in', ['draft'])]}"/>
+                    <field name="status" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box" position="inside">
+                        <button class="oe_stat_button" type="action" name="%(customer_package_2_invoice_draft)d"
+                                icon="fa-pencil-square-o" attrs="{'invisible':[('package_2_invoice_count','=',0)]}">
+                            <field name="package_2_invoice_count" string='Invoices' widget="statinfo"/>
+                        </button>
+                    </div>
+                    <group name="customer_service_package_details">
+                        <group>
+                            <field name="customer_id" required="1" attrs="{'readonly':[('status','!=','draft')]}"
+                                   autocomplete="off"/>
+                            <field name="vehicle_id" required="1"
+                                   options="{'no_create':True,'no_edit':True}"
+                                   domain="[('customer_id','=',customer_id)]"
+                                   attrs="{'readonly':[('status','!=','draft')]}" autocomplete="off"/>
+                            <field name="package_template_id" required="1"
+                                   attrs="{'readonly':[('status','!=','draft')]}" autocomplete="off"/>
+                        </group>
+                        <group>
+                            <field name="date_start" placeholder="mm/dd/yyyy" required="1"
+                                   attrs="{'readonly':[('status','!=','draft')]}" autocomplete="off"/>
+                            <field name="date_end" placeholder="mm/dd/yyyy" required="1"
+                                   attrs="{'readonly':[('status','!=','draft')]}" autocomplete="off"/>
+                            <field name="drive_km" placeholder="Total KM"
+                                   attrs="{'readonly':[('status','!=','draft')]}" autocomplete="off"/>
+                            <field name="company_id"
+                                   options="{'no_create':True,'no_edit':True}"
+                                   invisible="1"/>
+                            <field name="branch_id" domain="[('company_id', '=', company_id)]"
+                                   groups="aspl_company_branch.group_multi_branches"
+                                   options="{'no_create':True,'no_edit':True, 'no_open':True}"
+                                   context="{'multi_branch': True}"
+                                   attrs="{'readonly':[('status','!=','draft')]}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="parts" string="Service Parts">
+                            <field name="customer_parts_ids" attrs="{'readonly':[('status','!=','draft')]}">
+                                <tree editable="bottom">
+                                    <field name="product_id" required="1" autocomplete="off"/>
+                                    <field name="quantity" required="1"/>
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="price" widget="monetary"/>
+                                    <field name="amount_subtotal" readonly="1" widget="monetary"/>
+                                </tree>
+                                <form>
+                                    <group name="customer_service_package_parts_details">
+                                        <group>
+                                            <field name="customer_package_id" options="{'no_open': True}"/>
+                                            <field name="product_id"/>
+
+                                        </group>
+                                        <group>
+                                            <field name="quantity"/>
+                                            <field name="price" widget="monetary"/>
+                                            <field name="amount_subtotal"/>
+                                            <field name="company_id" invisible="1"/>
+                                            <field name="branch_id"/>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="currency_id" invisible="1"/>
+                                <field name="amount_part" widget="monetary" string="Total" readonly="1"/>
+                            </group>
+                        </page>
+                        <page name="service_labor" string="Service Labor">
+                            <field name="customer_labor_ids" attrs="{'readonly':[('status','!=','draft')]}">
+                                <tree editable="bottom">
+                                    <field name="labor_id" required="1" autocomplete="off"/>
+                                    <field name="description"/>
+                                    <field name="hours" widget='float_time' required="1"/>
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="rate" widget="monetary"/>
+                                    <field name="amount_subtotal" readonly="1" widget="monetary"/>
+                                </tree>
+                                <form>
+                                    <group name="customer_service_package_labor_details">
+                                        <group>
+                                            <field name="customer_package_id" options="{'no_open': True}"/>
+                                            <field name="labor_id"/>
+                                            <field name="description"/>
+                                            <field name="company_id" invisible="1"/>
+                                        </group>
+                                        <group>
+                                            <field name="hours" widget='float_time'/>
+                                            <field name="currency_id" invisible="1"/>
+                                            <field name="rate" widget="monetary"/>
+                                            <field name="amount_subtotal" widget="monetary"/>
+                                            <field name="branch_id"/>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="currency_id" invisible="1"/>
+                                <field name="amount_labor" widget="monetary" string="Total" readonly="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                    <group/>
+                    <group class="oe_subtotal_footer oe_right">
+                        <div class="oe_subtotal_footer_separator oe_inline"/>
+                        <field name="currency_id" invisible="1"/>
+                        <field name="total_amount" widget="monetary" nolabel="0" readonly="1"
+                               class="oe_subtotal_footer_separator"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="customer_service_calendar_view" model="ir.ui.view">
+        <field name="name">customer.service.calendar.view</field>
+        <field name="model">customer.service.package</field>
+        <field name="arch" type="xml">
+            <calendar date_start="date_start" color="customer_id" mode="month">
+                <field name="customer_id"/>
+                <field name="vehicle_id"/>
+                <field name="package_template_id"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="branch_id"/>
+                <field name="status"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="customer_service_package_search_view" model="ir.ui.view">
+        <field name="name">customer.service.package.search</field>
+        <field name="model">customer.service.package</field>
+        <field name="arch" type="xml">
+            <search string="Search Service Package Template ">
+                <field name="customer_id"/>
+                <field name="vehicle_id"/>
+                <field name="package_template_id"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="branch_id"/>
+                <field name="status"/>
+                <filter string="Draft" name="filter_draft" domain="[('status', '=', 'draft')]"/>
+                <filter string="Confirm" name="filter_confirm" domain="[('status', '=', 'confirm')]"/>
+                <filter string="Expired" name="filter_expire" domain="[('status', '=', 'expire')]"/>
+                <filter string="Cancel" name="filter_cancel" domain="[('status', '=', 'cancel')]"/>
+                <filter name="customer" string="Customer"
+                        context="{'group_by' : 'customer_id'}"/>
+                <filter name="package_template_id" string="Packages"
+                        context="{'group_by' : 'package_template_id'}"/>
+                <filter name="branch_id" string="Branch"
+                        context="{'group_by' : 'branch_id'}"/>
+                <filter name="status" string="Status"
+                        context="{'group_by' : 'status'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="customer_service_package_action" model="ir.actions.act_window">
+        <field name="name">Customer Service Package</field>
+        <field name="res_model">customer.service.package</field>
+        <field name="view_id" ref="customer_service_package_tree_view"/>
+        <field name="view_mode">tree,form,calendar</field>
+    </record>
+
+    <menuitem id="products_sub_menu2"
+              name="Customer Package"
+              parent="products_menu"
+              sequence="3"
+              action="customer_service_package_action"/>
+
+</odoo>

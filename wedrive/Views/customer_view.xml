@@ -1,0 +1,19 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_customer_form">
+            <field name="name">customer.form</field>
+            <field name="model">wedrive.customer</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="Customer_id"/>
+                            <field name="email"/>
+                            <!-- Adicione aqui outros campos relevantes para a visualização do cliente -->
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

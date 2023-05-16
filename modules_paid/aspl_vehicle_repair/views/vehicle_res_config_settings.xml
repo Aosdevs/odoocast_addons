@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="res_config_settings_labor_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.labor.view.form.inherit.web.recaptcha</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="app_settings_block" data-string="Vehicle Repair" id="vehicle" data-key="vehicle"
+                     string="Vehicle Repair">
+                    <h2>Vehicle Repair</h2>
+                    <div class="row mt16 o_settings_container" name="labor_service_setting_container">
+                        <!--                        <div class="col-12 col-lg-6 o_setting_box" id="labor_service_setting">-->
+                        <!--                            <div class="o_setting_right_pane">-->
+                        <!--                                <div class="content-group">-->
+                        <!--                                    <div class="mt16 row">-->
+                        <!--                                        <label for="labor_id" string="Labor" class="col-3 col-lg-3 o_form_label"/>-->
+                        <!--                                        <field name="labor_id" class="oe_inline"-->
+                        <!--                                               domain="[('type','=','service')]"/>-->
+                        <!--                                    </div>-->
+                        <!--                                </div>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                        <div class="col-12 col-lg-6 o_setting_box" id="pickup_drop_setting">
+                            <div class="o_setting_left_pane">
+                                <field name="check_pickup_drop"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="check_pickup_drop" string="Pickup/Drop-off Charges"
+                                       class="font-weight-bold"/>
+                                <div attrs="{'invisible':[('check_pickup_drop','!=',True)]}">
+                                    <label for="drop_product_id" string="PickUp/Drop"
+                                           class="col-8 col-lg-3 o_form_label"/>
+                                    <field name="drop_product_id" class="oe_inline"
+                                           domain="[('type','=','service')]"
+                                           attrs="{'required':[('check_pickup_drop','=',True)]}"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" id="labor_service_setting">
+                            <div class="o_setting_right_pane">
+                                <div class="content-group">
+                                    <div class="mt16 row">
+                                        <label for="service_location_id" string="Service Center Location"
+                                               class="col-3 col-lg-3 o_form_label"/>
+                                        <field name="service_location_id" domain="[('usage','=','internal')]"
+                                               class="oe_inline"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" id="labor_service_setting">
+                            <div class="o_setting_right_pane">
+                                <div class="content-group">
+                                    <div class="mt16 row">
+                                        <label for="delivery_location_id" string="Customer Service Location"
+                                               class="col-3 col-lg-3 o_form_label"/>
+                                        <field name="delivery_location_id" domain="[('usage','=','customer')]"
+                                               class="oe_inline"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="res_config_settings_labor_action" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module' : 'vehicle'}</field>
+    </record>
+
+    <menuitem id="vehicle_config_settings_menu"
+              name="Settings"
+              parent="configuration_menu"
+              sequence="7"/>
+
+    <menuitem id="configuration_vehicle_config_settings_sub_menu1"
+              name="Settings"
+              parent="vehicle_config_settings_menu"
+              sequence="2"
+              action="res_config_settings_labor_action"/>
+</odoo>

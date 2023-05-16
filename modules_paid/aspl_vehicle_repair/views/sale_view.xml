@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="sale_order_with_promotion_form">
+        <field name="name">Sale Order Promotion</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="apply_promotion" string="Apply Promotion" class="btn-primary"
+                        attrs="{'invisible': [('state', 'not in', ['draft'])]}"
+                        type="object"/>
+            </xpath>
+        </field>
+    </record>
+
+    <menuitem id="sale_menu"
+              name="Sale"
+              parent="vehicle_menu_root"
+              sequence="7"
+              groups="aspl_vehicle_repair.group_manager,aspl_vehicle_repair.group_sale_manager"/>
+
+    <menuitem id="sale_sub_menu2"
+              name="Sale"
+              parent="sale_menu"
+              sequence="2"
+              action="sale.action_quotations_with_onboarding"/>
+
+</odoo>

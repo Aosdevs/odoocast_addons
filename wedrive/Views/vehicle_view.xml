@@ -1,0 +1,75 @@
+<odoo>
+    <data>
+        <!-- Vehicle Tree View -->
+        <record id="view_vehicle_tree" model="ir.ui.view">
+            <field name="name">wedrive.vehicle.tree</field>
+            <field name="model">wedrive.vehicle</field>
+            <field name="arch" type="xml">
+                <tree string="Veículos">
+                    <field name="name"/>
+                    <field name="plate"/>
+                    <field name="customer_id"/>
+                    <field name="type"/>
+                    <field name="year_model"/>
+                    <field name="version"/>
+                    <field name="km"/>
+                    <field name="chassi"/>
+                    <field name="color"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Vehicle Form View -->
+        <record id="view_vehicle_form" model="ir.ui.view">
+            <field name="name">wedrive_vehicle.form</field>
+            <field name="model">wedrive.vehicle</field>
+            <field name="arch" type="xml">
+                <form string="Veículo" create="true" edit="true">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="plate"/>
+                            <field name="customer_id"/>
+                            <field name="type"/>
+                            <field name="year_model"/>
+                            <field name="version"/>
+                            <field name="km"/>
+                            <field name="chassi"/>
+                            <field name="color"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Vehicle Search View -->
+        <record id="view_vehicle_search" model="ir.ui.view">
+            <field name="name">wedrive.vehicle.search</field>
+            <field name="model">wedrive.vehicle</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="plate"/>
+                    <field name="customer_id"/>
+                    <field name="type"/>
+                    <field name="year_model"/>
+                    <field name="version"/>
+                    <field name="km"/>
+                    <field name="chassi"/>
+                    <field name="color"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Vehicle Action -->
+        <record id="action_vehicle" model="ir.actions.act_window">
+            <field name="name">Veículos</field>
+            <field name="res_model">wedrive.vehicle</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Vehicle Menu Item -->
+        <menuitem id="menu_vehicle" name="Veículos" parent="base.menu_fleet_management" sequence="20"/>
+        <menuitem id="menu_vehicle_list" name="Lista de Veículos" parent="menu_vehicle" action="action_vehicle" sequence="10"/>
+    </data>
+</odoo>

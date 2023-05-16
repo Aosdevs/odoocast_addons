@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="vehicle_manufacture_tree_view" model="ir.ui.view">
+        <field name="name">vehicle.manufacture.tree</field>
+        <field name="model">vehicle.manufacture</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="vehicle_manufacture_form_view" model="ir.ui.view">
+        <field name="name">vehicle.manufacture.form</field>
+        <field name="model">vehicle.manufacture</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group name="vehicle_manufacture_details">
+                        <group>
+                            <group>
+                                <div class="oe_title">
+                                    <h1>
+                                        <label for="name" class="oe_edit_only" string="Name"/>
+                                        <field name="name" required="1" placeholder="Name" autocomplete="off"/>
+                                    </h1>
+                                </div>
+                                <group/>
+                            </group>
+                            <group/>
+                            <group>
+                                <field name="code" string="Code" autocomplete="off"/>
+                            </group>
+
+                            <group/>
+                        </group>
+                        <group/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="vehicle_manufacture_search_view">
+        <field name="name">vehicle.manufacture.search</field>
+        <field name="model">vehicle.manufacture</field>
+        <field name="arch" type="xml">
+            <search string="Search Vehicle Manufacture">
+                <field name="name"/>
+                <field name="code"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="vehicle_manufacture_action" model="ir.actions.act_window">
+        <field name="name">Vehicle Manufacture</field>
+        <field name="res_model">vehicle.manufacture</field>
+        <field name="view_id" ref="vehicle_manufacture_tree_view"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="configuration_menu"
+              name="Configuration"
+              parent="vehicle_menu_root"
+              sequence="9"
+              groups="aspl_vehicle_repair.group_manager"/>
+
+    <menuitem id="configuration_sub_menu1"
+              name="Vehicle"
+              parent="configuration_menu"
+              sequence="2"/>
+
+    <menuitem id="configuration_vehicle_sub_menu1"
+              name="Manufacture"
+              parent="configuration_sub_menu1"
+              sequence="2"
+              action="vehicle_manufacture_action"/>
+
+    <menuitem id="configuration_vehicle_sub_menu2"
+              name="Model"
+              parent="configuration_sub_menu1"
+              sequence="3"
+              action="vehicle_model_action"/>
+</odoo>

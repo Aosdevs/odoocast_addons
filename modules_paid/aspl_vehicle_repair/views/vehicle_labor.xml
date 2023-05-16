@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="vehicle_labor_tree_view" model="ir.ui.view">
+        <field name="name">vehicle.labor.tree</field>
+        <field name="model">vehicle.labor</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="product_id"/>
+                <field name="type_id"/>
+                <field name="estimate_time" widget='float_time'/>
+                <field name="currency_id" invisible="1"/>
+                <field name="amount" widget="monetary" decoration-bf="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="vehicle_labor_form_view" model="ir.ui.view">
+        <field name="name">vehicle.labor.form</field>
+        <field name="model">vehicle.labor</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group name="vehicle_labor_details">
+                        <group>
+                            <div class="oe_title">
+                                <h1>
+                                    <label for="product_id" class="oe_edit_only" string="Name"/>
+                                    <field name="product_id" required="1" placeholder="Name"
+                                           domain="[('type','=','service')]"/>
+                                </h1>
+                            </div>
+                            <group/>
+                        </group>
+                        <group/>
+                        <group>
+                            <field name="type_id" required="1"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="amount" widget="monetary" required="1"/>
+                            <field name="estimate_time" widget='float_time'/>
+                        </group>
+                        <group/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="vehicle_labor_search_view">
+        <field name="name">vehicle.labor.search</field>
+        <field name="model">vehicle.labor</field>
+        <field name="arch" type="xml">
+            <search string="Search Vehicle Labor">
+                <field name="product_id"/>
+                <field name="type_id"/>
+                <field name="estimate_time"/>
+                <filter name="product_id" string="Labor Name"
+                        context="{'group_by' : 'product_id'}"/>
+                <filter name="type_id" string="Vehicle Type"
+                        context="{'group_by' : 'type_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="labor_type_tree_view" model="ir.ui.view">
+        <field name="name">labor.type.tree</field>
+        <field name="model">labor.type</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="labor_type_form_view" model="ir.ui.view">
+        <field name="name">labor.type.form</field>
+        <field name="model">labor.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group name="labor_type_details">
+                        <group>
+                            <div class="oe_title">
+                                <h1>
+                                    <label for="name" class="oe_edit_only" string="Name"/>
+                                    <field name="name" required="1" placeholder="Name"/>
+                                </h1>
+                            </div>
+                            <group/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="labor_type_search_view">
+        <field name="name">labor.type.search</field>
+        <field name="model">labor.type</field>
+        <field name="arch" type="xml">
+            <search string="Search Labor Type">
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+
+    <record id="vehicle_labor_action" model="ir.actions.act_window">
+        <field name="name">Vehicle Labor</field>
+        <field name="res_model">vehicle.labor</field>
+        <field name="view_id" ref="vehicle_labor_tree_view"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="labor_type_action" model="ir.actions.act_window">
+        <field name="name">Labor Type</field>
+        <field name="res_model">labor.type</field>
+        <field name="view_id" ref="labor_type_tree_view"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="configuration_workorder_sub_menu1"
+              name="Labor"
+              parent="configuration_sub_menu3"
+              action="vehicle_labor_action"/>
+
+    <menuitem id="configuration_workorder_sub_menu2"
+              name="Labor Type"
+              parent="configuration_sub_menu3"
+              action="labor_type_action"/>
+</odoo>
