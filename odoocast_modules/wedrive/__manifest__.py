@@ -5,19 +5,14 @@
     'license': 'LGPL-3',
     'summary': 'Módulo para gerenciar prontuário de veículos',
     'depends': [
-        'base', 'fleet',
-        'contacts',
-        'product',
+        'base',
     ],
     'author': 'Alexandre Santos',
     'website': 'www.wedrive.com.br',
 
     'data': [
-        'views/vehicle_view.xml',
-        'views/customer_view.xml',
-        'views/professional_view.xml',
-        'views/service_view.xml',
-        'views/history_view.xml',
+        'views/vehicle_ocr_api_view.xml',
+        'static/src/js/web_camera.js',
     ],
     'installable': True,
     'application': True,

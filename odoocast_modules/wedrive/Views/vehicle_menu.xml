@@ -1,0 +1,13 @@
+<odoo>
+    <data>
+        <!-- Definindo o menu -->
+        <menuitem id="menu_vehicle" name="Veículos" sequence="10" action="action_vehicle" />
+        
+        <!-- Definindo a ação do menu -->
+        <record id="action_vehicle" model="ir.actions.act_window">
+            <field name="name">Veículos</field>
+            <field name="res_model">vehicle.model</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>
