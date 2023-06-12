@@ -31,23 +31,31 @@ class FleetVehicle(models.Model):
         headers = {
             "Content-Type": "application/json"
         }
-        response = requests.post(url, json=payload, headers=headers)
-        data = response.json()
-        if data.get("codigo") == 1:
-            return {
-                'marca': data['informacoes_veiculo']['marca'],
-                'modelo': data['informacoes_veiculo']['modelo'],
-                'ano': data['informacoes_veiculo']['ano'],
-                'cor': data['informacoes_veiculo']['cor'],
-                'chassi': data['informacoes_veiculo']['chassi'],
-                'municipio': data['informacoes_veiculo']['municipio'],
-                'uf': data['informacoes_veiculo']['uf'],
-                'segmento': data['informacoes_veiculo']['segmento'],
-                'anoModelo': data['informacoes_veiculo']['anoModelo'],
-                'subsegmento': data['informacoes_veiculo']['subsegmento'],
-                'combustivel': data['informacoes_veiculo']['combustivel'],
-                'cilindradas': data['informacoes_veiculo']['cilindradas'],
-            }
+        try:
+            response = requests.post(url, json=payload, headers=headers)
+            response.raise_for_status()  # Verifica se houve erro na requisição
+            data = response.json()
+            if data.get("codigo") == 1:
+                return {
+                    'marca': data['informacoes_veiculo']['marca'],
+                    'modelo': data['informacoes_veiculo']['modelo'],
+                    'ano': data['informacoes_veiculo']['ano'],
+                    'cor': data['informacoes_veiculo']['cor'],
+                    'chassi': data['informacoes_veiculo']['chassi'],
+                    'municipio': data['informacoes_veiculo']['municipio'],
+                    'uf': data['informacoes_veiculo']['uf'],
+                    'segmento': data['informacoes_veiculo']['segmento'],
+                    'anoModelo': data['informacoes_veiculo']['anoModelo'],
+                    'subsegmento': data['informacoes_veiculo']['subsegmento'],
+                    'combustivel': data['informacoes_veiculo']['combustivel'],
+                    'cilindradas': data['informacoes_veiculo']['cilindradas'],
+                }
+        except requests.exceptions.RequestException as e:
+            # Trata erros de conexão, timeouts, etc.
+            print(f"Erro na requisição HTTP: {e}")
+        except ValueError as e:
+            # Trata erros ao decodificar a resposta JSON
+            print(f"Erro ao decodificar a resposta JSON: {e}")
         return {}
 
     @api.model
@@ -57,4 +65,3 @@ class FleetVehicle(models.Model):
             plate_data = self.action_get_plate_info(plate)
             vals.update(plate_data)
         return super(FleetVehicle, self).create(vals)
-

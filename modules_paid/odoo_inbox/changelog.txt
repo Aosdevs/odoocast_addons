@@ -1,0 +1,12 @@
+Date: 10 June 2022
+version: 14.0.1.0
+-----------------
+1. [ADD] Initial release for version 15.0
+1.1 Fixing
+
+Date: 02 September 2022
+version: 14.0.1.1
+- mapping of email to inbox for sent items sent through gmail or other 3rd party email 
+- need to set the author id to be able to map the user and email without catchall for both incoming and outgoing
+- Removed website dependency
+- miscellaneous issues fixed
