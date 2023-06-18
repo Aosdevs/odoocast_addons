@@ -1,0 +1,256 @@
+<odoo>
+
+    <template id="new_saleorder_report_rowena" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//div[@class='page']" position="replace">
+            <div class="page" style="border-color: black; font-family: Helvetica, Arial;">
+                <div class="oe_structure"/>
+
+                <h2 style="color:black;">
+                    <span t-if="doc.state not in ['draft','sent']">Pedido:</span>
+                    <span t-if="doc.state in ['draft','sent']">Orçamento:</span>
+                    <span t-field="doc.name"/>
+                </h2>
+
+                <!-- Partner -->
+                <div class="row">
+                    <div class="col-6">
+                        <div class="pull-left company_address">
+                            <div>
+                                <strong t-field="doc.partner_id.commercial_partner_id.l10n_br_legal_name"/>
+                                <br/>
+                                <span t-field="doc.partner_id.commercial_partner_id.street"/>,
+                                <span t-field="doc.partner_id.commercial_partner_id.l10n_br_number"/>
+                                -
+                                <span t-field="doc.partner_id.commercial_partner_id.l10n_br_district"/>
+                                <br/>
+                                <span t-field="doc.partner_id.commercial_partner_id.zip"/>
+                                -
+                                <span t-field="doc.partner_id.commercial_partner_id.city_id.name"/>
+                                /
+                                <span t-field="doc.partner_id.commercial_partner_id.state_id.code"/>
+                                <br/>
+                                CNPJ:
+                                <span t-field="doc.partner_id.commercial_partner_id.l10n_br_cnpj_cpf"/>
+                                -
+                                IE:
+                                <span t-field="doc.partner_id.commercial_partner_id.l10n_br_inscr_est"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <strong>Contato:</strong>
+                        <span t-field="doc.partner_id"/>
+                        <br/>
+                        <strong>E-mail:</strong>
+                        <span t-field="doc.partner_id.email"/>
+                        <br/>
+                        <strong>Telefone:</strong>
+                        <span t-field="doc.partner_id.phone"/>
+                        <br/>
+                        <span t-field="doc.partner_id.mobile"/>
+                        <strong>Vendedor:</strong>
+                        <span t-field="doc.user_id"/>
+                        <br/>
+                    </div>
+                </div>
+
+                <!-- Is there a discount on at least one line? -->
+                <t t-set="display_discount" t-value="any([l.discount for l in doc.order_line])"/>
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th class="text-center" colspan="7" style="color:black;">Itens do Pedido</th>
+                        </tr>
+                        <tr class="text-center">
+                            <th class="col-2" style="color:black;"></th>
+                            <th class="col" style="color:black;">Produtos/Codigos</th>
+                            <th class="col" style="color:black;">Variação</th>
+                            <th class="col" style="color:black;">Impostos</th>
+                            <th class="col" style="color:black;">Qtd.</th>
+                            <th class="col" style="color:black;">Desconto</th>
+                            <th class="col" style="color:black;">Preço Unitário</th>
+                            <th class="col" style="color:black;">Preço Total</th>
+                        </tr>
+                    </thead>
+                    <tbody class="sale_tbody">
+                        <t t-foreach="doc.order_line" t-as="l">
+                            <tr>
+                                <td class="text-center">
+                                    <span t-field="l.product_id.image_128"
+                                          t-options='{"widget": "image", "style":"max-height: 64px"}'/>
+                                </td>
+                                <td style="vertical-align:middle;">
+                                    <t t-if="l.product_id.type in ['consu','product']">
+                                        <strong>[
+                                            <span t-field="l.product_id.default_code"/>
+                                            ]
+                                        </strong>
+                                        <br/>
+                                        <span t-field="l.product_id.name"/>
+                                    </t>
+                                    <t t-if="l.product_id.type in ['service']">
+                                        <span t-field="l.product_id.name"/>
+                                    </t>
+                                </td>
+                                <td class="text-center" style="font-size:11px">
+                                    <t t-foreach="l.product_template_attribute_value_ids" t-as="attrib_value">
+                                        <span t-esc=" '%s: %s' % (attrib_value.attribute_id.name, attrib_value.name)"/>
+                                    </t>
+                                </td>
+                                <td class="text-center" style="font-size:11px">
+                                    <span t-esc="', '.join(map(lambda x: (x.description or x.name), l.tax_id))"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-field="l.product_uom_qty"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-field="l.discount"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-field="l.price_unit"
+                                          t-options='{"widget": "monetary",
+                                        "display_currency": doc.pricelist_id.currency_id}'/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="l.price_total"
+                                          t-options='{"widget": "monetary",
+                                        "display_currency": doc.pricelist_id.currency_id}'/>
+                                </td>
+
+                            </tr>
+                        </t>
+
+                    </tbody>
+                </table>
+
+                <div class="clearfix">
+                    <div class="row pull-right" name="total">
+                        <div style="page-break-inside:avoid;">
+                            <table class="table-sm" style="min-width: 200px;max-width: 350px;">
+
+                                <!-- Subtotal - outras depesas -->
+
+                                <tr style="border-bottom:1px solid #dddddd;">
+                                    <td>Despesas:</td>
+                                    <td class="text-right">
+                                        <span t-field="doc.l10n_br_expense_amount"
+                                              t-options="{'widget':'monetary',
+                                                'display_currency': doc.pricelist_id.currency_id}"/>
+                                    </td>
+                                </tr>
+
+
+                                <tr style="border-bottom:1px solid #dddddd;">
+                                    <td>Seguro:</td>
+                                    <td class="text-right">
+                                        <span t-field="doc.l10n_br_insurance_amount"
+                                              t-options="{'widget':'monetary',
+                                                'display_currency': doc.pricelist_id.currency_id}"/>
+                                    </td>
+                                </tr>
+
+
+                                <tr style="border-bottom:1px solid #dddddd;">
+                                    <td>Frete;</td>
+                                    <td class="text-right">
+                                        <span t-field="doc.l10n_br_delivery_amount"
+                                              t-options="{'widget':'monetary',
+                                                'display_currency': doc.pricelist_id.currency_id}"/>
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom:1px solid #dddddd;">
+                                    <td>
+                                        <span>Impostos:</span>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-field="doc.amount_tax"
+                                              t-options="{'widget': 'monetary',
+                                            'display_currency': doc.pricelist_id.currency_id}"/>
+                                    </td>
+                                </tr>
+
+                                <tr class="border-black">
+                                    <td>
+                                        <strong>Total:</strong>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-field="doc.amount_total"
+                                              t-options="{'widget': 'monetary',
+                                            'display_currency': doc.pricelist_id.currency_id}"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <strong>Condição de Pagamento:</strong>
+                <span t-field="doc.payment_term_id.note"/>
+                <br/>
+                <strong>Validade da Proposta:</strong>
+                <span t-field="doc.validity_date"/>
+                <br/>
+                <strong>Frete:</strong>
+                <span t-field="doc.modalidade_frete"/>
+                <br/>
+                <br/>
+                <div style="page-break-inside:avoid;">
+                    <strong>Observações:</strong>
+                    <br/>
+                    <div style="font-size:11px">
+                        <span>- PRAZO PARA PRODUÇÃO:</span>
+                        <br/>
+                        <span>CONFECÇÃO, 20 DIAS ÚTEIS (NEGOCIÁVEIS).</span>
+                        <br/>
+                        <span>DEMAIS ITENS, 10 DIAS.(NEGOCIÁVEIS).</span>
+                        <span>- PREÇOS E ESTOQUES SUJEITO A ALTERAÇÕES.</span>
+                        <br/>
+                        <span>- FRETE CIF SP CAPITAL E GRANDE SP, DEMAIS REGIÕES FOB.</span>
+                        <br/>
+                        <span>- FAVOR, CERTIFICAR TODAS AS CONDIÇÕES COMERCIAIS ANTES DO ACEITE.</span>
+                        <br/>
+                        <br/>
+                    </div>
+                </div>
+                <div style="page-break-inside:avoid;">
+                    <strong>Aprovação da Proposta:</strong>
+                    <table class="table">
+                        <tr class="text-center">
+                            <th>Elaboração</th>
+                            <th>Aprovado por</th>
+                            <th>Cliente de acordo</th>
+                        </tr>
+                        <tr class="text-center">
+                            <td>
+                                <br/>
+                                ______________________
+                            </td>
+                            <td>
+                                <br/>
+                                ______________________
+                            </td>
+                            <td>
+                                <br/>
+                                ______________________
+                            </td>
+                        </tr>
+                        <tr class="text-center">
+                            <td>TANIA CALDAS LUIZ</td>
+                            <td>Khenya Alexandre</td>
+                            <td>Carimbo e assinatura</td>
+                        </tr>
+                    </table>
+                    <div class="text-center" style="font-size:10px">
+                        <p>SUJEITO A CONFIRMAÇÃO DE INCIDÊNCIA DE ST E DIFERENCIAL DE ALÍQUOTA DE ICMS.</p>
+                        <p>NO ATO DO FECHAMENTO SERÁ CONSULTADO.</p>
+                        <p>SUJEITO A CONFIRMAÇÃO DO ESTOQUE NO ATO DAS APROVAÇÕES.</p>
+                        <p>FRETE INCLUSO APENAS PARA GRANDE SÃO PAULO.</p>
+                        <p>CONFORME ART.18 DO CODIGO DE DEFESA DO CONSUMIDOR, LEI 8078/90.</p>
+                        <p>O PRAZO DE TROCA DE NOSSOS PRODUTOS É DE 30 DIAS APOS O RECEBIMENTO.</p>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

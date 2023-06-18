@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_generate_catalog_popup,Generate Product Catalog Popup,model_generate_catalog_popup,base.group_user,1,1,1,1
+access_generated_catalog,Generate Catalog,model_generated_catalog,base.group_user,1,1,1,0
+delete_generated_catalog,Generate Catalog,model_generated_catalog,dev_product_catalog_report.right_dev_product_catalog_report_manager,1,1,1,1

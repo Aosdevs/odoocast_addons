@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="product_template_form_parent_code" model="ir.ui.view">
+        <field name="name">product.template.form.parent.code</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="website_sale.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <field name="categ_id" position="after">
+                <field name="parent_code" />
+            </field>
+            <field name="website_id" position="after">
+                <field name="website_default_quantity" />
+            </field>
+        </field>
+    </record>
+
+    <record id="product_product_form_parent_code" model="ir.ui.view">
+        <field name="name">product.product.form.parent.code</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <field name="categ_id" position="after">
+                <field name="parent_code" />
+            </field>
+        </field>
+    </record>
+
+    <record id="product_product_easy_form_parent_code" model="ir.ui.view">
+        <field name="name">product.product.easy.form.parent.code</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+        <field name="arch" type="xml">
+            <field name="barcode" position="after">
+                <field name="parent_code" />
+            </field>
+        </field>
+    </record>
+
+</odoo>

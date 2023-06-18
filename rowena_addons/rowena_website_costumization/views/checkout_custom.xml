@@ -1,0 +1,10 @@
+<odoo>
+    <template id="payment" inherit_id="website_sale.payment">
+        <xpath expr="//div[@id='payment_method']/h3" position="replace">
+            <h3>Observações do Pedido</h3>
+        </xpath>
+        <xpath expr="//div[@id='payment_method']/t/t[2]" position="replace">
+            <t t-set="submit_txt">Enviar Orçamento</t>
+        </xpath>
+    </template>
+</odoo>

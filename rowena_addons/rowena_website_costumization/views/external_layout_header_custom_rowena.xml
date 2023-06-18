@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<odoo>
+    <template id="external_layout_background_rowena" inherit_id="web.external_layout_background">
+        <xpath expr="//div[@class='o_background_header']" position="replace">
+            <div class="o_background_header">
+
+                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % to_text(company.logo)"
+                     class="float-left"/>
+                <div class="float-left company_address">
+                    <div>
+                        <strong t-field="company.partner_id.l10n_br_legal_name"/>
+                        <br/>
+                        <span t-field="company.partner_id.street"/>,
+                        <span t-field="company.partner_id.l10n_br_number"/>
+                        -
+                        <span t-field="company.partner_id.l10n_br_district"/>
+                        <br/>
+                        <span t-field="company.partner_id.zip"/>
+                        -
+                        <span t-field="company.partner_id.city_id.name"/>
+                        /
+                        <span t-field="company.partner_id.state_id.code"/>
+                        <br/>
+                        CNPJ:
+                        <span t-field="company.partner_id.l10n_br_cnpj_cpf"/>
+                        -
+                        IE:
+                        <span t-field="company.partner_id.l10n_br_inscr_est"/>
+                    </div>
+                </div>
+                <div class="clearfix mb8"/>
+            </div>
+        </xpath>
+
+        <div t-attf-class="o_company_#{company.id}_layout footer o_background_footer" position="replace">
+            <div class="footer o_background_footer">
+                <div class="text-center" style="color:grey; border-color: grey">
+                    <ul class="list-inline" style="color:grey; border-color: grey">
+                        <li t-if="company.phone" style="color:grey;">
+                            <i class="fa fa-phone"/>
+                            <span t-field="company.phone"/>
+                        </li>
+                        <li t-if="company.email" style="color:grey;">
+                            <i class="fa fa-at"/>
+                            <span t-field="company.email"/>
+                        </li>
+                        <li t-if="company.website" style="color:grey;">
+                            <i class="fa fa-globe"/>
+                            <span t-field="company.website"/>
+                        </li>
+                        <li t-if="company.vat" style="color:grey;">
+                            <i class="fa fa-building-o"/>
+                            <t t-esc="company.country_id.vat_label or 'TIN'"/>:
+                            <span t-field="company.vat"/>
+                        </li>
+                    </ul>
+                    <div t-field="company.report_footer"/>
+                    <div class="text-muted">
+                        Page:
+                        <span class="page"/>
+                        of
+                        <span class="topage"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+</odoo>
+

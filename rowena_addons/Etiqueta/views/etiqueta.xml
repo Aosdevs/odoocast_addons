@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="etiqueta_tree" model="ir.ui.view">
+        <field name="name">etiqueta.geral.tree</field>
+        <field name="model">etiqueta.geral</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="numero_nfe"/>
+                <field name="cliente"/>
+                <field name="produto"/>
+                <field name="codigo"/>
+                <field name="qtt"/>
+                <field name="qtc"/>
+                <field name="volumes"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="etiqueta_form" model="ir.ui.view">
+        <field name="name">etiqueta.geral.form</field>
+        <field name="model">etiqueta.geral</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm" id="action_confirm" string="Marcar como impresso" class="btn-primary" type="object"/>
+                    <button name="action_envio" id="action_envio" string="Marcar como enviado" class="btn-primary" type="object"/>
+                    <button name="action_draft" id="action_draft" string="Voltar para rascunho" class="btn-primary" type="object"/>
+                    <field name="state" widget="statusbar" statusbar_visible="rascunho,impresso,envio"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="numero_nfe"/>
+                        <field name="cliente"/>
+                    </group>
+                    <group>
+                        <field name="produto"/>
+                        <field name="codigo"/>
+                    </group>
+                    <group>
+                        <field name="qtt"/>
+                        <field name="qtc"/>
+                        <field name="volumes"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="etiquetas_action" model="ir.actions.act_window">
+        <field name="name">Etiquetas</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">etiqueta.geral</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crie uma nova Etiqueta para impressão estilo zebra!
+            </p>
+        </field>
+    </record>
+
+
+    <menuitem id="etiqueta_root"
+              name="Etiqueta"
+              sequence="10"/>
+
+    <menuitem id="etiquetas_root"
+              name="Configurações"
+              parent="etiqueta_root"
+              sequence="10"/>
+    <menuitem id="etiqueta"
+              name="Marcadores"
+              parent="etiquetas_root"
+              action="etiquetas_action"
+              sequence="10"/>
+</odoo>

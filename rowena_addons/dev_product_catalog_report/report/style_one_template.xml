@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+For Module Support : devintelle@gmail.com  or Skype : devintelle
+ -->
+<odoo>
+    <template id="main_style_one_template">
+        <t t-call="dev_product_catalog_report.no_header_footer">
+            <div class="page" style="font-size:11px;">
+                <t t-set="product_data" t-value="get_products(o)"/>
+                <center>
+                    <span style="font-size: 14px;font-weight: bold;">
+                        Generated Product Catalog
+                    </span>
+                </center>
+                <t t-if="product_data">
+                    <t t-set="page_breaker" t-value="0"/>
+                    <t t-set="first_page" t-value="1"/>
+                    <t t-foreach="product_data" t-as="product_id">
+                        <t t-if="o.break_page>0">
+                            <t t-if="page_breaker==o.break_page">
+                                <div style="page-break-after: always;"></div>
+                                <t t-set="page_breaker" t-value="0"/>
+                            </t>
+                        </t>
+                        <table width="100%" style="table-layout: fixed;margin-top:10px;" class="table table-condensed">
+                            <t t-if="first_page==1">
+                                <tr style="word-wrap: break-word;">
+                                    <th style="border-bottom: 2px solid black;border-top: 1px solid white;background-color:#F4F6F6;" width="8%">No</th>
+                                    <t t-if="o.print_image">
+                                        <th style="border-bottom: 2px solid black;border-top: 1px solid white;background-color:#F4F6F6;">Image</th>
+                                    </t>
+                                    <t t-if="o.print_internal_reference">
+                                        <th style="border-bottom: 2px solid black;border-top: 1px solid white;background-color:#F4F6F6;">Internal Reference</th>
+                                    </t>
+                                    <th style="border-bottom: 2px solid black;border-top: 1px solid white;background-color:#F4F6F6;">Product Name</th>
+                                    <!--<t t-if="o.print_product_link">-->
+                                    <!--<th style="border-bottom: 2px solid black;border-top: 1px solid white;background-color:#F4F6F6;">Product Link</th>-->
+                                    <!--</t>-->
+                                    <th style="border-bottom: 2px solid black;border-top: 1px solid white;background-color:#F4F6F6;">Category</th>
+                                    <t t-if="o.print_price">
+                                        <th style="border-bottom: 2px solid black;border-top: 1px solid white;background-color:#F4F6F6;">Price</th>
+                                    </t>
+                                    <t t-if="o.print_description">
+                                        <th style="border-bottom: 2px solid black;border-top: 1px solid white;background-color:#F4F6F6;">Description</th>
+                                    </t>
+                                </tr>
+                                <t t-set="first_page" t-value="2"/>
+                            </t>
+                            <tr style="word-wrap: break-word;page-break-inside: avoid;">
+                                <td width="8%">
+                                    <span t-esc="product_id_index+1"/>
+                                </td>
+                                <t t-if="o.print_image">
+                                    <td>
+                                        <t t-if="product_id['product_image']">
+                                            <t t-if="o.image_size=='small'">
+                                                <img t-att-src="image_data_uri(product_id['product_image'])" style="height: 35px;width: 35px;"/>
+                                            </t>
+                                            <t t-if="o.image_size=='medium'">
+                                                <img t-att-src="image_data_uri(product_id['product_image'])" style="height: 60px;width: 60px;"/>
+                                            </t>
+                                            <t t-if="o.image_size=='large'">
+                                                <img t-att-src="image_data_uri(product_id['product_image'])" style="height: 85px;width: 85px;"/>
+                                            </t>
+                                        </t>
+                                        <t t-if="not product_id['product_image']">
+                                            <img t-att-src="'/dev_product_catalog_report/static/src/img/no_image.png'" style="height: 50px;width: 50px;"/>
+                                        </t>
+                                    </td>
+                                </t>
+                                <t t-if="o.print_internal_reference">
+                                    <td>
+                                        <span t-esc="product_id['default_code']"/>
+                                    </td>
+                                </t>
+                                <td>
+                                    <span t-esc="product_id['name']"/>
+                                </td>
+                                <!--<t t-if="o.print_product_link">-->
+                                <!--<td>-->
+                                <!--link of product-->
+                                <!--</td>-->
+                                <!--</t>-->
+                                <td>
+                                    <span t-esc="product_id['category']"/>
+                                </td>
+                                <t t-if="o.print_price">
+                                    <td>
+                                        <t t-esc="format_amount(product_id['list_price'], o)"/>
+                                    </td>
+                                </t>
+                                <t t-if="o.print_description">
+                                    <td>
+                                        <span t-esc="product_id['description_sale']"/>
+                                    </td>
+                                </t>
+                            </tr>
+                        </table>
+                        <t t-set="page_breaker" t-value="page_breaker+1"/>
+                    </t>
+                </t>
+            </div>
+        </t>
+    </template>
+
+    <template id="style_one_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="dev_product_catalog_report.main_style_one_template"/>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+For Module Support : devintelle@gmail.com  or Skype : devintelle
+ -->
+<odoo>
+    <record model="ir.module.category" id="dev_product_catalog_report_category">
+        <field name="name">Product Catalog</field>
+        <field name="sequence">0</field>
+    </record>
+
+    <record id="right_dev_product_catalog_report_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="category_id" ref="dev_product_catalog_report_category"/>
+    </record>
+    <record id="right_dev_product_catalog_report_manager" model="res.groups">
+        <field name="name">Manger</field>
+        <field name="implied_ids" eval="[(4, ref('right_dev_product_catalog_report_user'))]"/>
+        <field name="category_id" ref="dev_product_catalog_report_category"/>
+    </record>
+</odoo>

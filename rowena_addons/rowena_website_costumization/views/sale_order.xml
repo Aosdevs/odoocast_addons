@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sale_order_custom_totals" model="ir.ui.view">
+        <field name="name">sale.order.custom.totals</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='amount_tax']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='amount_untaxed']" position="attributes">
+                <attribute name="string">(=) Subtotal</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="sale_order_custom_totals_2" model="ir.ui.view">
+        <field name="name">sale.order.custom.totals_2</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="hidden_delivery_amount.view_sale_hidden_delivery"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='amount_total_without_hidden_delivery']" position="attributes">
+                <attribute name="string">(=) Subtotal</attribute>
+            </xpath>
+            <xpath expr="//field[@name='hidden_delivery_amount']" position="attributes">
+                <attribute name="string">(+) Frete (Oculto)</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_order_custom_totals_3" model="ir.ui.view">
+        <field name="name">sale.order.custom.totals_3</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="l10n_br_sale.sale_order_delivery_insurance_expense_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='l10n_br_insurance_amount']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='l10n_br_expense_amount']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_order_custom_totals_4" model="ir.ui.view">
+        <field name="name">sale.order.custom.totals_4</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_margin.sale_margin_sale_order"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='margin']" position="attributes">
+                <attribute name="groups">sales_team.group_sale_manager</attribute>
+            </xpath>
+            <xpath expr="//field[@name='margin_percent']" position="attributes">
+                <attribute name="groups">sales_team.group_sale_manager</attribute>
+            </xpath>
+        </field>
+    </record>
+
+
+
+
+
+
+
+</odoo>

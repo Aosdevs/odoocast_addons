@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="group_edit_price_unit" model="res.groups">
+        <field name="name">Editar preço unitário da venda</field>
+    </record>
+
+    <record id="sales_team.group_sale_manager" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('hidden_delivery_amount.group_edit_price_unit'))]"/>
+    </record>
+
+</odoo>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+For Module Support : devintelle@gmail.com  or Skype : devintelle
+ -->
+<odoo>
+    <template id="main_style_five_template">
+        <t t-call="dev_product_catalog_report.no_header_footer_5">
+            <div class="page" style="font-size:11px;">
+                <style>
+                    .catalog_1_head {
+                    margin-top: 25px;
+                    margin-left: 30px;
+                    font-size: 22px;
+                    font-weight: bold;
+                    }
+
+                    .catalog_1_content {
+                    margin-left: 30px;
+                    font-size: 22px;
+                    color: #566573;
+                    }
+                </style>
+                <t t-set="product_data" t-value="get_products(o)"/>
+                <t t-foreach="product_data" t-as="product_id">
+                    <div style="page-break-before:always;">
+                        <t t-if="product_id['product_image']">
+                            <img t-att-src="image_data_uri(product_id['product_image'])" style="width: 8.26in;height: 7in;margin-right:16px;"/>
+                        </t>
+                        <t t-if="not product_id['product_image']">
+                            <img t-att-src="'/dev_product_catalog_report/static/src/img/no_image.png'" style="width: 8.26in;height: 7in;"/>
+                        </t>
+                        <table width="100%" style="table-layout: fixed;">
+                            <tr>
+                                <td width="80%">
+                                    <div style="margin-top: 20px">&#160;</div>
+                                    <div class="catalog_1_head" t-attf-style="color:#{o.title_color}">NAME</div>
+                                    <div class="catalog_1_content">
+                                        <span t-esc="product_id['name']"/>
+                                    </div>
+
+                                    <t t-if="o.print_price">
+                                        <div class="catalog_1_head" t-attf-style="color:#{o.title_color}">PRICE</div>
+                                        <div class="catalog_1_content">
+                                            <t t-esc="format_amount(product_id['list_price'], o)"/>
+                                        </div>
+                                    </t>
+
+                                    <t t-if="o.print_internal_reference">
+                                        <div class="catalog_1_head" t-attf-style="color:#{o.title_color}">Internal Reference</div>
+                                        <div class="catalog_1_content">
+                                            <span t-esc="product_id['default_code']"/>
+                                        </div>
+                                    </t>
+
+                                    <t t-if="o.print_description">
+                                        <div class="catalog_1_head" t-attf-style="color:#{o.title_color}">Description</div>
+                                        <div class="catalog_1_content">
+                                            <span t-esc="product_id['description_sale']"/>
+                                        </div>
+                                    </t>
+                                </td>
+                                <td width="20%" style="text-align: right; vertical-align: bottom;">
+                                    <div style="margin-right: 10px;">
+                                        <t t-if="o.company_id.logo">
+                                            <img t-att-src="image_data_uri(o.company_id.logo)" style="height: 110px;width: 110px;"/>
+                                        </t>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </div>
+        </t>
+    </template>
+
+    <template id="style_five_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="dev_product_catalog_report.main_style_five_template"/>
+            </t>
+        </t>
+    </template>
+</odoo>

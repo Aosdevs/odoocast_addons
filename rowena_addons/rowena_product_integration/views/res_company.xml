@@ -1,0 +1,20 @@
+<odoo>
+  <record id="rowena_product_integration_company_view" model="ir.ui.view">
+    <field name="model">res.company</field>
+    <field name="inherit_id" ref="base.view_company_form" />
+    <field name="arch" type="xml">
+      <xpath expr="//notebook" position="inside">
+        <page name="product_sync" string="Product Sync">
+          <group name="asia_imports" string="ASIA Imports">
+            <field name="asia_pass" password="1"></field>
+          </group>
+          <group name="xbz" string="XBZ">
+            <field name="xbz_user"></field>
+            <field name="xbz_token" password="1"></field>
+          </group>
+        </page>
+      </xpath>
+    </field>
+  </record>
+</odoo>
+

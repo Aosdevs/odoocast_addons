@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+For Module Support : devintelle@gmail.com  or Skype : devintelle
+ -->
+<odoo>
+    <template id="main_style_three_template">
+        <t t-call="dev_product_catalog_report.no_header_footer">
+            <!--Three Box Per Row-->
+            <t t-if="o.box_per_row=='3'">
+                <div class="page" style="font-size:11px;">
+                    <t t-set="chunks" t-value="get_products(o)"/>
+                    <t t-if="chunks">
+                        <t t-foreach="chunks" t-as="chunk">
+                            <table width="100%" style="table-layout: fixed;page-break-inside: avoid;margin-top:50px;margin-left:10px;">
+                                <tr>
+                                    <td width="30%">
+                                        <t t-if="len(chunk) >= 1">
+                                            <t t-set="product_id" t-value="create_product_data(chunk[0], o)"/>
+                                            <div t-attf-style="border:2px #{o.border_style} #{o.border_color};height: 4.5in;width: 2in;">
+                                                <!--product details-->
+                                                <center>
+                                                    <span t-esc="product_id['name']" style="font-size: 16px;font-weight: bold;"/>
+                                                </center>
+
+                                                <!--Image-->
+                                                <t t-if="o.image_size=='small'">
+                                                    <div style="height: 105px;margin-top: 5px;">
+                                                        <center>
+                                                            <t t-if="product_id['product_image']">
+                                                                <img t-att-src="image_data_uri(product_id['product_image'])"
+                                                                     style="height: 45px;width: 85px;"/>
+                                                            </t>
+                                                            <t t-if="not product_id['product_image']">
+                                                                <img t-att-src="'/dev_product_catalog_report/static/src/img/no_image.png'" style="height: 40px;width: 85px;border: 1px solid gray;"/>
+
+                                                            </t>
+                                                        </center>
+                                                    </div>
+                                                </t>
+                                                <t t-if="o.image_size=='medium'">
+                                                    <div style="height: 105px;margin-top: 5px;">
+                                                        <center>
+                                                            <t t-if="product_id['product_image']">
+                                                                <img t-att-src="image_data_uri(product_id['product_image'])"
+                                                                     style="height: 75px;width: 110px;"/>
+                                                            </t>
+                                                            <t t-if="not product_id['product_image']">
+                                                                <img t-att-src="'/dev_product_catalog_report/static/src/img/no_image.png'" style="height: 65px;width: 110px;border: 1px solid gray;"/>
+
+                                                            </t>
+                                                        </center>
+                                                    </div>
+                                                </t>
+                                                <t t-if="o.image_size=='large'">
+                                                    <div style="height: 105px;margin-top: 5px;">
+                                                        <center>
+                                                            <t t-if="product_id['product_image']">
+                                                                <img t-att-src="image_data_uri(product_id['product_image'])"
+                                                                     style="height: 95px;width: 135px;"/>
+                                                            </t>
+                                                            <t t-if="not product_id['product_image']">
+                                                                <img t-att-src="'/dev_product_catalog_report/static/src/img/no_image.png'" style="height: 95px;width: 135px;border: 1px solid gray;"/>
+
+                                                            </t>
+                                                        </center>
+                                                    </div>
+                                                </t>
+
+                                                <!--Ref-->
+                                                <t t-if="o.print_internal_reference">
+                                                    <div t-attf-style="background-color:#{o.content_color};height:15px;font-size:11px;margin-left:5px;margin-right:5px;">
+                                                        <t t-if="product_id['default_code']">
+                                                            <center>
+                                                                <t t-esc="product_id['default_code']"/>
+                                                            </center>
+                                                        </t>
+                                                        <t t-if="not product_id['default_code']">
+                                                            <center>no code</center>
+                                                        </t>
+                                                    </div>
+                                                </t>
+
+                                                <!--Price-->
+                                                <t t-if="o.print_price">
+                                                    <div t-attf-style="background-color:#{o.content_color};height:15px;font-size:11px;margin-left:5px;margin-right:5px;height: 60px;margin-left:5px;margin-right:5px;margin-top:5px;">
+                                                        <t t-if="product_id['list_price']">
+                                                            <p style="text-align: center; line-height: 60px;font-size:20px;">
+                                                                <span t-esc="format_amount(product_id['list_price'], o)"/>
+                                                            </p>
+                                                        </t>
+                                                    </div>
+                                                </t>
+                                                <div t-attf-style="margin-left:5px;margin-right:5px;margin-top:5px;border-bottom:1px solid #{o.border_color};"></div>
+
+                                                <!--description-->
+                                                <t t-if="o.print_description">
+                                                    <t t-if="product_id['description_sale']">
+                                                        <div style="margin-left:5px;margin-right:5px;margin-top:5px;">
+                                                            <t t-esc="product_id['description_sale']"/>
+                                                        </div>
+                                                    </t>
+                                                </t>
+                                            </div>
+                                        </t>
+                                    </td>
+
+                                    <td width="5%"></td>
+
+                                    <td width="30%">
+                                        <t t-if="len(chunk) >= 2">
+                                            <t t-set="product_id" t-value="create_product_data(chunk[1], o)"/>
+                                            <div t-attf-style="border:2px #{o.border_style} #{o.border_color};height: 4.5in;width: 2in;">
+                                                <!--product details-->
+                                                <center>
+                                                    <span t-esc="product_id['name']" style="font-size: 16px;font-weight: bold;"/>
+                                                </center>
+
+                                                <!--Image-->
+                                                <t t-if="o.image_size=='small'">
+                                                    <div style="height: 105px;margin-top: 5px;">
+                                                        <center>
+                                                            <t t-if="product_id['product_image']">
+                                                                <img t-att-src="image_data_uri(product_id['product_image'])"
+                                                                     style="height: 45px;width: 85px;"/>
+                                                            </t>
+                                                            <t t-if="not product_id['product_image']">
+                                                                <img t-att-src="'/dev_product_catalog_report/static/src/img/no_image.png'" style="height: 40px;width: 85px;border: 1px solid gray;"/>
+
+                                                            </t>
+                                                        </center>
+                                                    </div>
+                                                </t>
+                                                <t t-if="o.image_size=='medium'">
+                                                    <div style="height: 105px;margin-top: 5px;">
+                                                        <center>
+                                                            <t t-if="product_id['product_image']">
+                                                                <img t-att-src="image_data_uri(product_id['product_image'])"
+                                                                     style="height: 75px;width: 110px;"/>
+                                                            </t>
+                                                            <t t-if="not product_id['product_image']">
+                                                                <img t-att-src="'/dev_product_catalog_report/static/src/img/no_image.png'" style="height: 65px;width: 110px;border: 1px solid gray;"/>
+
+                                                            </t>
+                                                        </center>
+                                                    </div>
+                                                </t>
+                                                <t t-if="o.image_size=='large'">
+                                                    <div style="height: 105px;margin-top: 5px;">
+                                                        <center>
+                                                            <t t-if="product_id['product_image']">
+                                                                <img t-att-src="image_data_uri(product_id['product_image'])"
+                                                                     style="height: 95px;width: 135px;"/>
+                                                            </t>
+                                                            <t t-if="not product_id['product_image']">
+                                                                <img t-att-src="'/dev_product_catalog_report/static/src/img/no_image.png'" style="height: 95px;width: 135px;border: 1px solid gray;"/>
+
+                                                            </t>
+                                                        </center>
+                                                    </div>
+                                                </t>
+
+                                                <!--Ref-->
+                                                <t t-if="o.print_internal_reference">
+                                                    <div t-attf-style="background-color:#{o.content_color};height:15px;font-size:11px;margin-left:5px;margin-right:5px;">
+                                                        <t t-if="product_id['default_code']">
+                                                            <center>
+                                                                <t t-esc="product_id['default_code']"/>
+                                                            </center>
+                                                        </t>
+                                                        <t t-if="not product_id['default_code']">
+                                                            <center>no code</center>
+                                                        </t>
+                                                    </div>
+                                                </t>
+
+                                                <!--Price-->
+                                                <t t-if="o.print_price">
+                                                    <div t-attf-style="background-color:#{o.content_color};height:15px;font-size:11px;margin-left:5px;margin-right:5px;height: 60px;margin-left:5px;margin-right:5px;margin-top:5px;">
+                                                        <t t-if="product_id['list_price']">
+                                                            <p style="text-align: center; line-height: 60px;font-size:20px;">
+                                                                <span t-esc="format_amount(product_id['list_price'], o)"/>
+                                                            </p>
+                                                        </t>
+                                                    </div>
+                                                </t>
+                                                <div t-attf-style="margin-left:5px;margin-right:5px;margin-top:5px;border-bottom:1px solid #{o.border_color};"></div>
+
+                                                <!--description-->
+                                                <t t-if="o.print_description">
+                                                    <t t-if="product_id['description_sale']">
+                                                        <div style="margin-left:5px;margin-right:5px;margin-top:5px;">
+                                                            <t t-esc="product_id['description_sale']"/>
+                                                        </div>
+                                                    </t>
+                                                </t>
+                                            </div>
+                                        </t>
+                                    </td>
+
+                                    <td width="5%"></td>
+
+                                    <td width="30%">
+                                        <t t-if="len(chunk) == 3">
+                                            <t t-set="product_id" t-value="create_product_data(chunk[2], o)"/>
+                                            <div t-attf-style="border:2px #{o.border_style} #{o.border_color};height: 4.5in;width: 2in;">
+                                                <!--product details-->
+                                                <center>
+                                                    <span t-esc="product_id['name']" style="font-size: 16px;font-weight: bold;"/>
+                                                </center>
+
+                                                <!--Image-->
+                                                <t t-if="o.image_size=='small'">
+                                                    <div style="height: 105px;margin-top: 5px;">
+                                                        <center>
+                                                            <t t-if="product_id['product_image']">
+                                                                <img t-att-src="image_data_uri(product_id['product_image'])"
+                                                                     style="height: 45px;width: 85px;"/>
+                                                            </t>
+                                                            <t t-if="not product_id['product_image']">
+                                                                <img t-att-src="'/dev_product_catalog_report/static/src/img/no_image.png'" style="height: 40px;width: 85px;border: 1px solid gray;"/>
+
+                                                            </t>
+                                                        </center>
+                                                    </div>
+                                                </t>
+                                                <t t-if="o.image_size=='medium'">
+                                                    <div style="height: 105px;margin-top: 5px;">
+                                                        <center>
+                                                            <t t-if="product_id['product_image']">
+                                                                <img t-att-src="image_data_uri(product_id['product_image'])"
+                                                                     style="height: 75px;width: 110px;"/>
+                                                            </t>
+                                                            <t t-if="not product_id['product_image']">
+                                                                <img t-att-src="'/dev_product_catalog_report/static/src/img/no_image.png'" style="height: 65px;width: 110px;border: 1px solid gray;"/>
+
+                                                            </t>
+                                                        </center>
+                                                    </div>
+                                                </t>
+                                                <t t-if="o.image_size=='large'">
+                                                    <div style="height: 105px;margin-top: 5px;">
+                                                        <center>
+                                                            <t t-if="product_id['product_image']">
+                                                                <img t-att-src="image_data_uri(product_id['product_image'])"
+                                                                     style="height: 95px;width: 135px;"/>
+                                                            </t>
+                                                            <t t-if="not product_id['product_image']">
+                                                                <img t-att-src="'/dev_product_catalog_report/static/src/img/no_image.png'" style="height: 95px;width: 135px;border: 1px solid gray;"/>
+
+                                                            </t>
+                                                        </center>
+                                                    </div>
+                                                </t>
+
+                                                <!--Ref-->
+                                                <t t-if="o.print_internal_reference">
+                                                    <div t-attf-style="background-color:#{o.content_color};height:15px;font-size:11px;margin-left:5px;margin-right:5px;">
+                                                        <t t-if="product_id['default_code']">
+                                                            <center>
+                                                                <t t-esc="product_id['default_code']"/>
+                                                            </center>
+                                                        </t>
+                                                        <t t-if="not product_id['default_code']">
+                                                            <center>no code</center>
+                                                        </t>
+                                                    </div>
+                                                </t>
+
+                                                <!--Price-->
+                                                <t t-if="o.print_price">
+                                                    <div t-attf-style="background-color:#{o.content_color};height:15px;font-size:11px;margin-left:5px;margin-right:5px;height: 60px;margin-left:5px;margin-right:5px;margin-top:5px;">
+                                                        <t t-if="product_id['list_price']">
+                                                            <p style="text-align: center; line-height: 60px;font-size:20px;">
+                                                                <span t-esc="format_amount(product_id['list_price'], o)"/>
+                                                            </p>
+                                                        </t>
+                                                    </div>
+                                                </t>
+                                                <div t-attf-style="margin-left:5px;margin-right:5px;margin-top:5px;border-bottom:1px solid #{o.border_color};"></div>
+
+                                                <!--description-->
+                                                <t t-if="o.print_description">
+                                                    <t t-if="product_id['description_sale']">
+                                                        <div style="margin-left:5px;margin-right:5px;margin-top:5px;">
+                                                            <t t-esc="product_id['description_sale']"/>
+                                                        </div>
+                                                    </t>
+                                                </t>
+                                            </div>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </table>
+                        </t>
+                    </t>
+                </div>
+            </t>
+            <!--Two Box Per Row-->
+            <t t-if="o.box_per_row=='2'">
+                <div class="page" style="font-size:11px;">
+                    <t t-set="chunks" t-value="get_products(o)"/>
+                    <t t-if="chunks">
+                        <t t-foreach="chunks" t-as="chunk">
+                            <table width="100%" style="table-layout: fixed;page-break-inside: avoid;margin-top:50px;margin-left: 20px;;">
+                                <tr>
+                                    <td width="48%">
+                                        <t t-if="len(chunk) >= 1">
+                                            <t t-set="product_id" t-value="create_product_data(chunk[0], o)"/>
+                                            <div t-attf-style="border:2px #{o.border_style} #{o.border_color};height: 4.5in;width: 3in;">
+                                                <!--product details-->
+                                                <center>
+                                                    <span t-esc="product_id['name']" style="font-size: 16px;font-weight: bold;"/>
+                                                </center>
+
+                                                <!--Image-->
+                                                <t t-if="o.image_size=='small'">
+                                                    <div style="height: 105px;margin-top: 5px;">
+                                                        <center>
+                                                            <t t-if="product_id['product_image']">
+                                                                <img t-att-src="image_data_uri(product_id['product_image'])"
+                                                                     style="height: 45px;width: 95px;"/>
+                                                            </t>
+                                                            <t t-if="not product_id['product_image']">
+                                                                <img t-att-src="'/dev_product_catalog_report/static/src/img/no_image.png'" style="height: 40px;width: 85px;border: 1px solid gray;"/>
+
+                                                            </t>
+                                                        </center>
+                                                    </div>
+                                                </t>
+                                                <t t-if="o.image_size=='medium'">
+                                                    <div style="height: 105px;margin-top: 5px;">
+                                                        <center>
+                                                            <t t-if="product_id['product_image']">
+                                                                <img t-att-src="image_data_uri(product_id['product_image'])"
+                                                                     style="height: 75px;width: 120px;"/>
+                                                            </t>
+                                                            <t t-if="not product_id['product_image']">
+                                                                <img t-att-src="'/dev_product_catalog_report/static/src/img/no_image.png'" style="height: 65px;width: 110px;border: 1px solid gray;"/>
+
+                                                            </t>
+                                                        </center>
+                                                    </div>
+                                                </t>
+                                                <t t-if="o.image_size=='large'">
+                                                    <div style="height: 105px;margin-top: 5px;">
+                                                        <center>
+                                                            <t t-if="product_id['product_image']">
+                                                                <img t-att-src="image_data_uri(product_id['product_image'])"
+                                                                     style="height: 95px;width: 145px;"/>
+                                                            </t>
+                                                            <t t-if="not product_id['product_image']">
+                                                                <img t-att-src="'/dev_product_catalog_report/static/src/img/no_image.png'" style="height: 95px;width: 135px;border: 1px solid gray;"/>
+
+                                                            </t>
+                                                        </center>
+                                                    </div>
+                                                </t>
+
+                                                <!--Ref-->
+                                                <t t-if="o.print_internal_reference">
+                                                    <div t-attf-style="background-color:#{o.content_color};height:15px;font-size:11px;margin-left:5px;margin-right:5px;">
+                                                        <t t-if="product_id['default_code']">
+                                                            <center>
+                                                                <t t-esc="product_id['default_code']"/>
+                                                            </center>
+                                                        </t>
+                                                        <t t-if="not product_id['default_code']">
+                                                            <center>no code</center>
+                                                        </t>
+                                                    </div>
+                                                </t>
+
+                                                <!--Price-->
+                                                <t t-if="o.print_price">
+                                                    <div t-attf-style="background-color:#{o.content_color};height:15px;font-size:11px;margin-left:5px;margin-right:5px;height: 60px;margin-left:5px;margin-right:5px;margin-top:5px;">
+                                                        <t t-if="product_id['list_price']">
+                                                            <p style="text-align: center; line-height: 60px;font-size:20px;">
+                                                                <span t-esc="format_amount(product_id['list_price'], o)"/>
+                                                            </p>
+                                                        </t>
+                                                    </div>
+                                                </t>
+                                                <div t-attf-style="margin-left:5px;margin-right:5px;margin-top:5px;border-bottom:1px solid #{o.border_color};"></div>
+
+                                                <!--description-->
+                                                <t t-if="o.print_description">
+                                                    <t t-if="product_id['description_sale']">
+                                                        <div style="margin-left:5px;margin-right:5px;margin-top:5px;">
+                                                            <t t-esc="product_id['description_sale']"/>
+                                                        </div>
+                                                    </t>
+                                                </t>
+                                            </div>
+                                        </t>
+                                    </td>
+
+                                    <td width="5%"></td>
+
+                                    <td width="48%">
+                                        <t t-if="len(chunk) == 2">
+                                            <t t-set="product_id" t-value="create_product_data(chunk[1], o)"/>
+                                            <div t-attf-style="border:2px #{o.border_style} #{o.border_color};height: 4.5in;width: 3in;">
+                                                <!--product details-->
+                                                <center>
+                                                    <span t-esc="product_id['name']" style="font-size: 16px;font-weight: bold;"/>
+                                                </center>
+
+                                                <!--Image-->
+                                                <t t-if="o.image_size=='small'">
+                                                    <div style="height: 105px;margin-top: 5px;">
+                                                        <center>
+                                                            <t t-if="product_id['product_image']">
+                                                                <img t-att-src="image_data_uri(product_id['product_image'])"
+                                                                     style="height: 45px;width: 95px;"/>
+                                                            </t>
+                                                            <t t-if="not product_id['product_image']">
+                                                                <img t-att-src="'/dev_product_catalog_report/static/src/img/no_image.png'" style="height: 40px;width: 85px;border: 1px solid gray;"/>
+
+                                                            </t>
+                                                        </center>
+                                                    </div>
+                                                </t>
+                                                <t t-if="o.image_size=='medium'">
+                                                    <div style="height: 105px;margin-top: 5px;">
+                                                        <center>
+                                                            <t t-if="product_id['product_image']">
+                                                                <img t-att-src="image_data_uri(product_id['product_image'])"
+                                                                     style="height: 75px;width: 120px;"/>
+                                                            </t>
+                                                            <t t-if="not product_id['product_image']">
+                                                                <img t-att-src="'/dev_product_catalog_report/static/src/img/no_image.png'" style="height: 65px;width: 110px;border: 1px solid gray;"/>
+
+                                                            </t>
+                                                        </center>
+                                                    </div>
+                                                </t>
+                                                <t t-if="o.image_size=='large'">
+                                                    <div style="height: 105px;margin-top: 5px;">
+                                                        <center>
+                                                            <t t-if="product_id['product_image']">
+                                                                <img t-att-src="image_data_uri(product_id['product_image'])"
+                                                                     style="height: 95px;width: 145px;"/>
+                                                            </t>
+                                                            <t t-if="not product_id['product_image']">
+                                                                <img t-att-src="'/dev_product_catalog_report/static/src/img/no_image.png'" style="height: 95px;width: 135px;border: 1px solid gray;"/>
+
+                                                            </t>
+                                                        </center>
+                                                    </div>
+                                                </t>
+
+                                                <!--Ref-->
+                                                <t t-if="o.print_internal_reference">
+                                                    <div t-attf-style="background-color:#{o.content_color};height:15px;font-size:11px;margin-left:5px;margin-right:5px;">
+                                                        <t t-if="product_id['default_code']">
+                                                            <center>
+                                                                <t t-esc="product_id['default_code']"/>
+                                                            </center>
+                                                        </t>
+                                                        <t t-if="not product_id['default_code']">
+                                                            <center>no code</center>
+                                                        </t>
+                                                    </div>
+                                                </t>
+
+                                                <!--Price-->
+                                                <t t-if="o.print_price">
+                                                    <div t-attf-style="background-color:#{o.content_color};height:15px;font-size:11px;margin-left:5px;margin-right:5px;height: 60px;margin-left:5px;margin-right:5px;margin-top:5px;">
+                                                        <t t-if="product_id['list_price']">
+                                                            <p style="text-align: center; line-height: 60px;font-size:20px;">
+                                                                <span t-esc="format_amount(product_id['list_price'], o)"/>
+                                                            </p>
+                                                        </t>
+                                                    </div>
+                                                </t>
+                                                <div t-attf-style="margin-left:5px;margin-right:5px;margin-top:5px;border-bottom:1px solid #{o.border_color};"></div>
+
+                                                <!--description-->
+                                                <t t-if="o.print_description">
+                                                    <t t-if="product_id['description_sale']">
+                                                        <div style="margin-left:5px;margin-right:5px;margin-top:5px;">
+                                                            <t t-esc="product_id['description_sale']"/>
+                                                        </div>
+                                                    </t>
+                                                </t>
+                                            </div>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </table>
+                        </t>
+                    </t>
+                </div>
+            </t>
+
+        </t>
+    </template>
+
+    <template id="style_three_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="dev_product_catalog_report.main_style_three_template"/>
+            </t>
+        </t>
+    </template>
+</odoo>

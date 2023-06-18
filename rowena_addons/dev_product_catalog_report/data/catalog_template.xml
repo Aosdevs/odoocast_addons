@@ -1,0 +1,63 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+For Module Support : devintelle@gmail.com  or Skype : devintelle
+ -->
+<odoo noupdate="1">
+    <record id="template_dev_product_catalog_report" model="mail.template">
+        <field name="name">Product Catalog</field>
+        <field name="subject">Product Catalog</field>
+        <field name="model_id" ref="dev_product_catalog_report.model_generated_catalog"/>
+        <field name="body_html"><![CDATA[
+            <div style="font-family:Arial,Helvetica,sans-serif;font-size:14px;padding-top:5px;padding-left:30px;padding-bottom:5px;padding-right:30px;">
+                <p>Hello,</p>
+                <br/><br/>
+                <p>We are sending a Catalog of our product with this email, please check it and let us know if you are interested</p>
+                <br/>
+                <p>**Please find attached Product Catalog (PDF File)</p>
+                <br/>
+                <p>Do not hesitate to contact us if you have any questions.</p>
+                <br/>
+            </div>
+            % set company = object.user_id.company_id
+            <br/>
+            <br/>
+            <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+                <div style="width: 375px; margin: 0px; padding: 0px; background-color: #8E0000; border-top-left-radius: 5px 5px; border-top-right-radius: 5px 5px; background-repeat: repeat no-repeat;">
+                    <h3 style="margin: 0px; padding: 2px 14px; font-size: 12px; color: #DDD;">
+                        <strong style="text-transform:uppercase;">${company.name}</strong></h3>
+                </div>
+                <div style="width: 347px; margin: 0px; padding: 5px 14px; line-height: 16px; background-color: #F2F2F2;">
+                    <span style="color: #222; margin-bottom: 5px; display: block; ">
+                    % if company.street:
+                        ${company.street}<br/>
+                    % endif
+                    % if company.street2:
+                        ${company.street2}<br/>
+                    % endif
+                    % if company.city or company.zip:
+                        ${company.zip} ${company.city}<br/>
+                    % endif
+                    % if company.country_id:
+                        ${company.state_id and ('%s, ' % company.state_id.name) or ''} ${company.country_id.name or ''}<br/>
+                    % endif
+                    </span>
+                    % if company.phone:
+                        <div style="margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; ">
+                            Phone:&nbsp; ${company.phone}
+                        </div>
+                    % endif
+                    % if company.website:
+                        <div>
+                            Web :&nbsp;<a href="${company.website}">${company.website}</a>
+                        </div>
+                    %endif
+                    <p></p>
+                </div>
+            </div>
+        ]]></field>
+    </record>
+
+
+</odoo>

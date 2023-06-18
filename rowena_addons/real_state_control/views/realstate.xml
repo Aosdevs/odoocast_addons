@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="realstate_tree" model="ir.ui.view">
+        <field name="name">real.state.tree</field>
+        <field name="model">real.state</field>
+        <field name="arch" type="xml">
+
+
+
+            <tree>
+                <field name="reference"/>
+                <field name="type"/>
+                <field name="realstate_cep"/>
+                <field name="date_when"/>
+                <field name="expected_price"/>
+                <field name="best_offer"/>
+                <field name="selling_price"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="realstate_form" model="ir.ui.view">
+        <field name="name">real.state.form</field>
+        <field name="model">real.state</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm" id="action_confirm" string="Vendido" class="btn-primary" type="object" attrs="{'invisible': [('state', '=', 'sale')]}"/>
+                    <button name="action_create_invoice" id="action_create_invoice" string="Criar Fatura" class="btn-primary" type="object" attrs="{'invisible': [('state', '=', 'draft')]}"/>/>
+                    <button name="action_cancel" id="action_cancel" string="Voltar para provisório"  type="object" attrs="{'invisible': [('state', '=', 'draft')]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,sale"/>
+                </header>
+                <sheet>
+                    <h1>
+                        <group>
+                            <field name="reference" placeholder="Defina um nome de identificação para a mobília"/>
+                        </group>
+                    </h1>
+                    <div style="display: flex">
+                        <group>
+                            <field name="type" string="Tipo da propriedade"/>
+                            <field name="realstate_cep" string="Código postal"/>
+                            <field name="date_when" string="Disponível desde"/>
+                        </group>
+                        <group>
+                            <field name="expected_price" string="Expectativa de preço"/>
+                            <field name="best_offer" string="Melhor oferta"/>
+                            <field name="selling_price" string="Preço de venda"/>
+                        </group>
+                    </div>
+                    <notebook>
+                        <page string="Descrição">
+                            <group>
+                                <field name="description"/>
+                                <field name="bedrooms"/>
+                                <field name="living_area"/>
+                                <field name="facade"/>
+                                <field name="garage"/>
+                                <field name="garden"/>
+                                <field name="total_area"/>
+                            </group>
+                        </page>
+                        <page string="Pedido">
+                            <group>
+                                <field name="realstate_line" widget="one2many" editable="bottom">
+                                    <tree>
+                                        <field name="partner_id"/>
+                                        <field name="offer"/>
+                                        <button name="button_check" style="color: green;" icon="fa-check" type="object"/>
+                                        <button name="button_x" style="color: red;" icon="fa-times" type="object"/>
+                                        <field name="state" widget="statusbar"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                        <page string="Outras informações">
+                            <group>
+                            <field name="user_id"/>
+                            <field name="buyer_id"/>
+                             <field name="currency_id" invisible="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+
+
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="realstate_action" model="ir.actions.act_window">
+        <field name="name">Controle de Mobília</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">real.state</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crie um novo relatório para o controle de mobília
+            </p>
+        </field>
+    </record>
+
+
+    <menuitem id="realstate_root"
+              name="Mobílias"
+              action="realstate_action"
+              sequence="10"/>
+
+    <menuitem id="realstate"
+              name="Mobília"
+              parent="realstate_root"
+              sequence="10"/>
+
+
+</odoo>

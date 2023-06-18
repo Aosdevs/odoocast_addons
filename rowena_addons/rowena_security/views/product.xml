@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="product_template_cost_visualization" model="ir.ui.view">
+        <field name="name">product.template.cost.visualization</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <field name="standard_price" position="attributes">
+                <attribute name="groups">rowena_security.group_hide_field_standard_price</attribute>
+            </field>
+            <xpath expr="//label[@for='standard_price']" position="attributes">
+                <attribute name="groups">rowena_security.group_hide_field_standard_price</attribute>
+            </xpath>
+            <xpath expr="//div[@name='standard_price_uom']" position="attributes">
+                <attribute name="groups">rowena_security.group_hide_field_standard_price</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_template_cost_tree_visualization" model="ir.ui.view">
+        <field name="name">product.template.cost.tree.visualization</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="standard_price" position="attributes">
+                <attribute name="groups">rowena_security.group_hide_field_standard_price</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="product_cost_visualization" model="ir.ui.view">
+        <field name="name">product.cost.visualization</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <field name="standard_price" position="attributes">
+                <attribute name="groups">rowena_security.group_hide_field_standard_price</attribute>
+            </field>
+            <xpath expr="//label[@for='standard_price']" position="attributes">
+                <attribute name="groups">rowena_security.group_hide_field_standard_price</attribute>
+            </xpath>
+            <xpath expr="//div[@name='standard_price_uom']" position="attributes">
+                <attribute name="groups">rowena_security.group_hide_field_standard_price</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_cost_tree_visualization" model="ir.ui.view">
+        <field name="name">product.cost.tree.visualization</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_product_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="standard_price" position="attributes">
+                <attribute name="groups">rowena_security.group_hide_field_standard_price</attribute>
+            </field>
+        </field>
+    </record>
+
+</odoo>

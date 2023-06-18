@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+For Module Support : devintelle@gmail.com  or Skype : devintelle
+ -->
+<odoo>
+ 	<menuitem name="Product Catalog"
+              id="root_menu_product_catalog"
+              sequence="99"/>
+
+ 	<menuitem name="Product Catalog"
+              id="main_menu_product_catalog"
+			  parent="root_menu_product_catalog"
+              sequence="1"/>
+</odoo>

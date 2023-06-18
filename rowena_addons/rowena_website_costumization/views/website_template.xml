@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="assets_frontend" inherit_id="website.assets_frontend">
+        <xpath expr="script[last()]" position="after">
+            <script type="text/javascript" src="/rowena_website_costumization/static/src/js/website_sale.js"></script>
+        </xpath>
+    </template>
+
+    <template id="product" inherit_id="website_sale.product">
+        <xpath class="rowena_default_code_widget" expr="//div[@id='product_details']/h1" position="after">
+            <div style="margin-top: -10px; margin-bottom: 20px;">
+                <strong>Código Pai:
+                    <span t-field="product.parent_code"/>
+                </strong>
+                <br/>
+                <strong>Referência:
+                    <span id="display_default_code"/>
+                </strong>
+            </div>
+        </xpath>
+        <xpath expr="//p[hasclass('css_not_available_msg')]" position="replace">
+            <p t-if="True" class="css_not_available_msg alert alert-warning">Esta combinação não está disponível.</p>
+        </xpath>
+    </template>
+
+    <template id="website_sale_product_item" name="Website Ross Item" inherit_id="website_sale.products_item">
+        <xpath expr="//div[hasclass('o_wsale_product_information_text')]//a" position="replace">
+            <a itemprop="name" t-att-href="product_href" t-att-content="product.name">
+                <t t-esc="product.name"></t>
+                <span t-if="product.parent_code">-
+                    <t t-esc="product.parent_code"/>
+                </span>
+            </a>
+        </xpath>
+    </template>
+
+    <!--<template id="website_sale_product_list_price" name="Website sale hiden price"
+              inherit_id="website_sale.products_item">
+        <xpath expr="//div[@class='product_price']" position="replace">
+            <span></span>
+        </xpath>
+    </template>-->
+
+    <template id="product_price" inherit_id="website_sale.product_price">
+        <xpath expr="//div[@itemprop='offers']" position="replace">
+            <span></span>
+        </xpath>
+    </template>
+
+    <template id="website_sale_cart_hide_price" inherit_id="website_sale.cart">
+        <xpath expr="//div[@id='o_cart_summary']" position="replace">
+            <span></span>
+        </xpath>
+    </template>
+
+    <template id="cart_summary" inherit_id="website_sale.cart_lines">
+        <xpath expr="//td[hasclass('td-price')]" position="replace">
+            <td></td>
+        </xpath>
+        <xpath expr="//th[hasclass('td-price')]" position="replace">
+            <th></th>
+        </xpath>
+    </template>
+
+    <template id="website_sale_cart_hide_price_pay" inherit_id="website_sale.cart_summary">
+        <xpath expr="//table[@id='cart_products']/tbody/tr/td[5]" position="replace">
+            <td></td>
+        </xpath>
+        <xpath expr="//table[@id='cart_products']/thead/tr/th[4]" position="replace">
+            <th></th>
+        </xpath>
+    </template>
+
+    <template id="website_sale_cart_hide_price_total" inherit_id="website_sale.total">
+        <xpath expr="//div[@id='cart_total']" position="replace">
+            <div></div>
+        </xpath>
+    </template>
+
+    <template id="sale_order_portal_template_inherit_2" inherit_id="sale.sale_order_portal_content_totals_table">
+        <xpath expr="//table[@class='table table-sm']" position="replace">
+            <div></div>
+        </xpath>
+    </template>
+
+    <template id="sale_order_portal_content_rowena_inherit" inherit_id="sale.sale_order_portal_content">
+        <xpath expr="//section[@id='details']/table/thead/tr/th[3]" position="replace">
+            <th></th>
+        </xpath>
+        <xpath expr="//section[@id='details']/table/thead/tr/th[4]" position="replace">
+            <th></th>
+        </xpath>
+        <xpath expr="//section[@id='details']/table/thead/tr/th[5]" position="replace">
+            <th></th>
+        </xpath>
+        <xpath expr="//section[@id='details']/table/thead/tr/th[6]" position="replace">
+            <th></th>
+        </xpath>
+    </template>
+
+    <template id="sale_order_portal_content_rowena_inherit_2" inherit_id="sale.sale_order_portal_content">
+        <xpath expr="//table[@id='sales_order_table']/tbody/t/tr/t/td[3]" position="replace">
+            <td></td>
+        </xpath>
+        <xpath expr="//table[@id='sales_order_table']/tbody/t/tr/t/td[4]" position="replace">
+            <td></td>
+        </xpath>
+        <xpath expr="//table[@id='sales_order_table']/tbody/t/tr/t/td[5]" position="replace">
+            <td></td>
+        </xpath>
+        <xpath expr="//table[@id='sales_order_table']/tbody/t/tr/t/td[6]" position="replace">
+            <td></td>
+        </xpath>
+    </template>
+
+    <template id="website_sale_wishlist_product_wishlist_rowena_inherit"
+              inherit_id="website_sale_wishlist.product_wishlist">
+        <xpath expr="//table[@id='o_comparelist_table']/body/t/tr/td[3]" position="replace"/>
+    </template>
+
+     <template id="sale_order_portal_template_rowena_inherit"
+              inherit_id="sale.sale_order_portal_template">
+        <xpath expr="//h2[@class='mb-0']" position="replace"/>
+    </template>
+
+    <template id="website_sale_products_item_rowena_inherit" inherit_id="website_sale.products_item">
+        <xpath expr="//div[@class='product_price']" position="replace">
+            <div></div>
+        </xpath>
+    </template>
+
+    <template id="website_sale_confirmation_rowena_inherit" inherit_id="website_sale.confirmation">
+        <xpath expr="//table[@class='table']" position="replace"/>
+    </template>
+
+</odoo>

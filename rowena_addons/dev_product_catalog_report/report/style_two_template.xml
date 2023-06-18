@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+For Module Support : devintelle@gmail.com  or Skype : devintelle
+ -->
+<odoo>
+    <template id="main_style_two_template">
+        <t t-call="dev_product_catalog_report.no_header_footer">
+            <div class="page" style="font-size:11px;">
+                <t t-set="product_data" t-value="get_products(o)"/>
+                <center>
+                    <span style="font-size: 14px;font-weight: bold;">
+                        Generated Product Catalog
+                    </span>
+                </center>
+                <t t-if="product_data">
+                    <t t-set="page_breaker" t-value="0"/>
+                    <t t-foreach="product_data" t-as="product_id">
+                        <t t-if="o.break_page>0">
+                            <t t-if="page_breaker==o.break_page">
+                                <div style="page-break-after: always;"></div>
+                                <t t-set="page_breaker" t-value="0"/>
+                            </t>
+                        </t>
+                        <table width="100%" style="table-layout: fixed;margin-top:10px;">
+                            <!--Small Image-->
+                            <tr style="word-wrap: break-word;page-break-inside: avoid;">
+                                <t t-if="o.image_size=='small'">
+                                    <td width="13%" style="padding-top: 5px;">
+                                        <t t-if="product_id['product_image']">
+                                            <img t-att-src="image_data_uri(product_id['product_image'])"
+                                                 style="height: 45px;width: 85px;"/>
+                                        </t>
+                                        <t t-if="not product_id['product_image']">
+                                            <img t-att-src="'/dev_product_catalog_report/static/src/img/no_image.png'" style="height: 40px;width: 85px;border: 1px solid gray;"/>
+
+                                        </t>
+                                    </td>
+                                    <td width="87%" style="vertical-align: top;">
+                                        <div style="font-size: 16px;font-weight:bold;">
+                                            <t t-esc="product_id['name']"/>
+                                        </div>
+                                        <!--ref-->
+                                        <t t-if="o.print_internal_reference">
+                                            <div style="height:15px;width:100px;background-color:#D5DBDB;font-size:11px;">
+                                                <t t-if="product_id['default_code']">
+                                                    <center>
+                                                        <t t-esc="product_id['default_code']"/>
+                                                    </center>
+                                                </t>
+                                                <t t-if="not product_id['default_code']">
+                                                    <center>no code</center>
+                                                </t>
+                                            </div>
+                                        </t>
+                                        <!--price-->
+                                        <t t-if="o.print_price">
+                                            <div style="height:15px;width:100px;background-color:#D5DBDB;font-size:11px;margin-top:5px;">
+                                                <span>
+                                                    &#160;<b>Price</b>&#160;:&#160;
+                                                    <t t-esc="format_amount(product_id['list_price'], o)"/>
+                                                </span>
+                                            </div>
+                                        </t>
+                                        <!--description-->
+                                        <t t-if="o.print_description">
+                                            <div style="margin-top:5px;font-size:11px;">
+                                                <t t-if="product_id['description_sale']">
+                                                    <p>
+                                                        <t t-esc="product_id['description_sale']"/>
+                                                    </p>
+                                                </t>
+                                            </div>
+                                        </t>
+                                    </td>
+                                </t>
+                                <!--Medium Image-->
+                                <t t-if="o.image_size=='medium'">
+                                    <td width="17%" style="padding-top: 5px;">
+                                        <t t-if="product_id['product_image']">
+                                            <img t-att-src="image_data_uri(product_id['product_image'])"
+                                                 style="height: 75px;width: 110px;"/>
+                                        </t>
+                                        <t t-if="not product_id['product_image']">
+                                            <img t-att-src="'/dev_product_catalog_report/static/src/img/no_image.png'" style="height: 65px;width: 110px;border: 1px solid gray;"/>
+
+                                        </t>
+                                    </td>
+                                    <td width="83%" style="vertical-align: top;">
+                                        <div style="font-size: 16px;font-weight:bold;">
+                                            <t t-esc="product_id['name']"/>
+                                        </div>
+                                        <!--ref-->
+                                        <t t-if="o.print_internal_reference">
+                                            <div style="height:15px;width:105px;background-color:#D5DBDB;font-size:11px;">
+                                                <t t-if="product_id['default_code']">
+                                                    <center>
+                                                        <t t-esc="product_id['default_code']"/>
+                                                    </center>
+                                                </t>
+                                                <t t-if="not product_id['default_code']">
+                                                    <center>no code</center>
+                                                </t>
+                                            </div>
+                                        </t>
+                                        <!--price-->
+                                        <t t-if="o.print_price">
+                                            <div style="height:15px;width:105px;background-color:#D5DBDB;font-size:11px;margin-top:5px;">
+                                                <span>
+                                                    &#160;<b>Price</b>&#160;:&#160;
+                                                    <t t-esc="format_amount(product_id['list_price'], o)"/>
+                                                </span>
+                                            </div>
+                                        </t>
+                                        <!--description-->
+                                        <t t-if="o.print_description">
+                                            <div style="margin-top:5px;font-size:11px;">
+                                                <t t-if="product_id['description_sale']">
+                                                    <p>
+                                                        <t t-esc="product_id['description_sale']"/>
+                                                    </p>
+                                                </t>
+                                            </div>
+                                        </t>
+                                    </td>
+                                </t>
+                                <!--Large Image-->
+                                <t t-if="o.image_size=='large'">
+                                    <td width="21%" style="padding-top: 5px;">
+                                        <t t-if="product_id['product_image']">
+                                            <img t-att-src="image_data_uri(product_id['product_image'])"
+                                                 style="height: 95px;width: 135px;"/>
+                                        </t>
+                                        <t t-if="not product_id['product_image']">
+                                            <img t-att-src="'/dev_product_catalog_report/static/src/img/no_image.png'" style="height: 95px;width: 135px;border: 1px solid gray;"/>
+
+                                        </t>
+                                    </td>
+                                    <td width="79%" style="vertical-align: top;">
+                                        <div style="font-size: 16px;font-weight:bold;">
+                                            <t t-esc="product_id['name']"/>
+                                        </div>
+                                        <!--ref-->
+                                        <t t-if="o.print_internal_reference">
+                                            <div style="height:15px;width:108px;background-color:#D5DBDB;font-size:11px;">
+                                                <t t-if="product_id['default_code']">
+                                                    <center>
+                                                        <t t-esc="product_id['default_code']"/>
+                                                    </center>
+                                                </t>
+                                                <t t-if="not product_id['default_code']">
+                                                    <center>no code</center>
+                                                </t>
+                                            </div>
+                                        </t>
+                                        <!--price-->
+                                        <t t-if="o.print_price">
+                                            <div style="height:15px;width:108px;background-color:#D5DBDB;font-size:11px;margin-top:5px;">
+                                                <span>
+                                                    &#160;<b>Price</b>&#160;:&#160;
+                                                    <t t-esc="format_amount(product_id['list_price'], o)"/>
+                                                </span>
+                                            </div>
+                                        </t>
+                                        <!--description-->
+                                        <t t-if="o.print_description">
+                                            <div style="margin-top:5px;font-size:11px;">
+                                                <t t-if="product_id['description_sale']">
+                                                    <p>
+                                                        <t t-esc="product_id['description_sale']"/>
+                                                    </p>
+                                                </t>
+                                            </div>
+                                        </t>
+                                    </td>
+                                </t>
+                            </tr>
+                        </table>
+                        <div t-attf-style="border-bottom:1px solid #{o.border_color};margin-top:2px;"></div>
+                        <t t-set="page_breaker" t-value="page_breaker+1"/>
+                    </t>
+                </t>
+            </div>
+        </t>
+    </template>
+
+    <template id="style_two_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="dev_product_catalog_report.main_style_two_template"/>
+            </t>
+        </t>
+    </template>
+</odoo>

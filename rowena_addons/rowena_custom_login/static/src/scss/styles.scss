@@ -1,0 +1,52 @@
+#wrap{
+    overflow-x: hidden;
+}
+
+.website_custom_login_container{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 700px;
+    z-index: 1100;
+    background-color: white;
+    transform: translate(110%, 0px);
+    transition: all 0.75s ease-in-out;
+    .container{
+        width: 60%;
+        margin: auto;
+        margin-top: 30vh;
+        h3{
+            text-align: center;
+            margin-bottom: 30px;
+        }
+    }
+
+    &.active{
+        -webkit-transform: translate(0%, 0px);
+        transform: translate(0%, 0px);
+        transition: all 0.75s ease-in-out;
+        box-shadow: 0px 0px 0px 10000px rgba(0, 0, 0, 0.8);
+    }
+
+    #close-custom-login{
+        cursor: pointer;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        font-size: 2em;
+    }
+}
+
+
+
+form.oe_signup_form{
+    max-width: 1000px;
+    .btn-block{
+        max-width: 300px;
+        margin: auto;
+    }
+    .form-row{
+        margin-top: 10px;
+    }
+}

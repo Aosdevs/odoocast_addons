@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+For Module Support : devintelle@gmail.com  or Skype : devintelle 
+ -->
+<odoo>
+    <template id="no_header_footer">
+        <div class="header">
+        </div>
+        <div class="article o_report_layout_standard">
+            <t t-raw="0"/>
+        </div>
+        <div class="footer">
+            <t t-if="not company">
+                <!-- Multicompany -->
+                <t t-if="company_id">
+                    <t t-set="company" t-value="company_id"/>
+                </t>
+                <t t-elif="o and 'company_id' in o">
+                    <t t-set="company" t-value="o.company_id.sudo()"/>
+                </t>
+                <t t-else="else">
+                    <t t-set="company" t-value="res_company"/>
+                </t>
+            </t>
+
+
+            <table width="100%">
+                <tr>
+                    <th width="80%" style="text-align: center;font-size: 16px;">
+                        <b>
+                            <t t-esc="company.name"/>
+                        </b>
+                    </th>
+                    <td width="20%" style="text-align: right;">
+                        <img t-att-src="image_data_uri(o.company_id.logo)" style="height: 90px;width: 90px;"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </template>
+
+    <template id="no_header_footer_5">
+        <div class="header">
+        </div>
+        <div class="article o_report_layout_standard">
+            <t t-raw="0"/>
+        </div>
+        <div class="footer">
+        </div>
+    </template>
+</odoo>

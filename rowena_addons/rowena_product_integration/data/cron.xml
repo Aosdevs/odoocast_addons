@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<odoo>
+  <record id="ir_cron_product_xbz" model="ir.cron" forcecreate="True">
+      <field name="name">Cron XBZ Products</field>
+      <field name="interval_number">1</field>
+      <field name="interval_type">days</field>
+      <field name="state">code</field>
+      <field name="user_id" ref="base.user_root"/>
+      <field name="numbercall">-1</field>
+      <field eval="False" name="doall" />
+      <field name="model_id" ref="model_product_template"/>
+      <field name="code">model.sync_xbz_products()</field>
+  </record>
+
+  <record id="ir_cron_product_asia" model="ir.cron" forcecreate="True">
+      <field name="name">Cron ASIA Products</field>
+      <field name="interval_number">1</field>
+      <field name="interval_type">days</field>
+      <field name="state">code</field>
+      <field name="user_id" ref="base.user_root"/>
+      <field name="numbercall">-1</field>
+      <field eval="False" name="doall" />
+      <field name="model_id" ref="model_product_template"/>
+      <field name="code">model.sync_asia_import_products()</field>
+  </record>
+</odoo>

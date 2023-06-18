@@ -1,0 +1,138 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_margin_rules
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-07-13 14:07+0000\n"
+"PO-Revision-Date: 2022-07-13 14:07+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_margin_rules
+#: model:ir.model.fields,field_description:sale_margin_rules.field_salesperson_profit_margin__create_uid
+msgid "Created by"
+msgstr "Criado por"
+
+#. module: sale_margin_rules
+#: model:ir.model.fields,field_description:sale_margin_rules.field_salesperson_profit_margin__create_date
+msgid "Created on"
+msgstr "Criado em"
+
+#. module: sale_margin_rules
+#: model:ir.model.fields,field_description:sale_margin_rules.field_product_template__display_name
+#: model:ir.model.fields,field_description:sale_margin_rules.field_res_users__display_name
+#: model:ir.model.fields,field_description:sale_margin_rules.field_sale_order_line__display_name
+#: model:ir.model.fields,field_description:sale_margin_rules.field_salesperson_profit_margin__display_name
+msgid "Display Name"
+msgstr "Nome exibido"
+
+#. module: sale_margin_rules
+#: model:ir.model.fields,field_description:sale_margin_rules.field_salesperson_profit_margin__name
+msgid "Group Name"
+msgstr "Nome do Grupo"
+
+#. module: sale_margin_rules
+#: model:ir.model.fields,field_description:sale_margin_rules.field_product_template__id
+#: model:ir.model.fields,field_description:sale_margin_rules.field_res_users__id
+#: model:ir.model.fields,field_description:sale_margin_rules.field_sale_order_line__id
+#: model:ir.model.fields,field_description:sale_margin_rules.field_salesperson_profit_margin__id
+msgid "ID"
+msgstr "ID"
+
+#. module: sale_margin_rules
+#: model:ir.model.fields,field_description:sale_margin_rules.field_product_template____last_update
+#: model:ir.model.fields,field_description:sale_margin_rules.field_res_users____last_update
+#: model:ir.model.fields,field_description:sale_margin_rules.field_sale_order_line____last_update
+#: model:ir.model.fields,field_description:sale_margin_rules.field_salesperson_profit_margin____last_update
+msgid "Last Modified on"
+msgstr "Última modificação em"
+
+#. module: sale_margin_rules
+#: model:ir.model.fields,field_description:sale_margin_rules.field_salesperson_profit_margin__write_uid
+msgid "Last Updated by"
+msgstr "Ultima atualização feita por"
+
+#. module: sale_margin_rules
+#: model:ir.model.fields,field_description:sale_margin_rules.field_salesperson_profit_margin__write_date
+msgid "Last Updated on"
+msgstr "Ultima atualização em"
+
+#. module: sale_margin_rules
+#: model:ir.model.fields,field_description:sale_margin_rules.field_salesperson_profit_margin__margin
+msgid "Margin"
+msgstr "Margem"
+
+#. module: sale_margin_rules
+#: model:ir.model.fields,help:sale_margin_rules.field_salesperson_profit_margin__margin
+msgid "Margin to salesperson work with"
+msgstr "Margem de trabalho para o vendedor"
+
+#. module: sale_margin_rules
+#: model:ir.model.fields,field_description:sale_margin_rules.field_product_product__min_margin
+#: model:ir.model.fields,field_description:sale_margin_rules.field_product_template__min_margin
+msgid "Minimum Margin"
+msgstr "Margem Mínima"
+
+#. module: sale_margin_rules
+#: model:ir.model.fields,help:sale_margin_rules.field_product_product__min_margin
+#: model:ir.model.fields,help:sale_margin_rules.field_product_template__min_margin
+msgid "Minimum profit margin allowed"
+msgstr "Margem de lucro mínima permitida"
+
+#. module: sale_margin_rules
+#: model:ir.model,name:sale_margin_rules.model_product_template
+msgid "Product Template"
+msgstr "Modelo de Produto"
+
+#. module: sale_margin_rules
+#: model:ir.model,name:sale_margin_rules.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Linha do pedido de vendas"
+
+#. module: sale_margin_rules
+#: model:ir.actions.act_window,name:sale_margin_rules.salesperson_profit_margin_action
+msgid "Sales Person Profit Margin Action"
+msgstr "Margem de Lucro Por Vendedor"
+
+#. module: sale_margin_rules
+#: model:ir.model.fields,field_description:sale_margin_rules.field_res_users__salesperson_profit_margin_id
+#: model:ir.ui.menu,name:sale_margin_rules.menu_salesperson_profit_margin
+#: model_terms:ir.ui.view,arch_db:sale_margin_rules.salesperson_profit_margin_form
+#: model_terms:ir.ui.view,arch_db:sale_margin_rules.salesperson_profit_margin_tree
+msgid "Salesperson Profit Margin"
+msgstr "Margem de Lucro Por Vendedor"
+
+#. module: sale_margin_rules
+#: model:ir.model.fields,field_description:sale_margin_rules.field_salesperson_profit_margin__salesperson_ids
+#: model_terms:ir.ui.view,arch_db:sale_margin_rules.salesperson_profit_margin_form
+msgid "Salespersons"
+msgstr "Vendedores"
+
+#. module: sale_margin_rules
+#: model:ir.model.fields,help:sale_margin_rules.field_salesperson_profit_margin__salesperson_ids
+msgid "Salespersons included in this group."
+msgstr "Vendedores incluídos neste grupo."
+
+#. module: sale_margin_rules
+#: code:addons/dreik_custom/sale_margin_rules/models/sale.py:0
+#: code:addons/sale_margin_rules/models/sale.py:0
+#, python-format
+msgid "The product margin needs to be at least %s"
+msgstr "A margem de lucro do produto precisa ser pelo menos %s"
+
+#. module: sale_margin_rules
+#: model:ir.model,name:sale_margin_rules.model_res_users
+msgid "Users"
+msgstr "Usuários"
+
+#. module: sale_margin_rules
+#: model:ir.model,name:sale_margin_rules.model_salesperson_profit_margin
+msgid "salesperson.profit.margin"
+msgstr ""

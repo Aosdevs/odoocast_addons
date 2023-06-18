@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record model="ir.ui.view" id="salesperson_profit_margin_tree">
+    <field name="name">Salesperson Profit Margin tree</field>
+    <field name="model">salesperson.profit.margin</field>
+    <field name="arch" type="xml">
+      <tree string="Salesperson Profit Margin">
+        <field name="name" />
+        <field name="margin" />
+        <field name="salesperson_ids" widget="many2many_tags_avatar" />
+      </tree>
+    </field>
+  </record>
+
+  <record model="ir.ui.view" id="salesperson_profit_margin_form">
+    <field name="name">Salesperson Profit Margin form</field>
+    <field name="model">salesperson.profit.margin</field>
+    <field name="arch" type="xml">
+      <form string="Salesperson Profit Margin">
+        <group>
+          <group>
+            <field name="name" />
+            <field name="margin" />
+          </group>
+          <group>
+            <field name="salesperson_ids" widget="many2many_tags_avatar">
+              <tree string="Salespersons" editable="bottom">
+              </tree>
+            </field>
+          </group>
+        </group>
+      </form>
+    </field>
+  </record>
+  <record model="ir.actions.act_window" id="salesperson_profit_margin_action">
+    <field name="name">Sales Person Profit Margin Action</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">salesperson.profit.margin</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+  
+  <menuitem id="sale_margin_rules.menu_salesperson_profit_margin" 
+    name="Salesperson Profit Margin" 
+    parent="sale.menu_sale_config"
+    sequence="99"
+    action="salesperson_profit_margin_action" />
+</odoo>

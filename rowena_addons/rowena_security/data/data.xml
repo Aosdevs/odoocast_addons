@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="group_create_company_contact" model="res.groups">
+        <field name="name">Criar contatos do tipo 'Empresa'</field>
+    </record>
+
+    <record id="group_confirm_quotations" model="res.groups">
+        <field name="name">Confirmar cotações</field>
+    </record>
+
+    <record id="group_create_invoices" model="res.groups">
+        <field name="name">Criar faturas a partir de cotações</field>
+    </record>
+
+    <record id="group_hide_action_button" model="res.groups">
+        <field name="name">Esconder botão 'Ação'</field>
+    </record>
+
+    <record id="group_hide_field_standard_price" model="res.groups">
+        <field name="name">Vizualizar custo de Produto</field>
+    </record>
+
+</odoo>

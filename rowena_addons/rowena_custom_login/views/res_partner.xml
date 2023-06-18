@@ -1,0 +1,14 @@
+<odoo>
+    <record id="view_partner_department_form" model="ir.ui.view">
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <page name="internal_notes" position="inside">
+                <group attrs="{'invisible': [('company_type', '=', 'company')]}">
+                    <field name="department" />
+                    <field name="office_role" />
+                </group>
+            </page>
+        </field>
+    </record>
+</odoo>
