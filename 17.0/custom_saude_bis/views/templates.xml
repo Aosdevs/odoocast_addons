@@ -1,0 +1,88 @@
+<odoo>
+    <!-- Botões no ambiente Minha Conta -->
+    <template id="my_account_buttons" inherit_id="portal.portal_my_home">
+        <xpath expr="//div[@class='o_portal_my_home']" position="inside">
+            <div class="o_portal_category row g-2 mt-3">
+                <t t-call="portal.portal_docs_entry">
+                    <t t-set="icon" t-value="'/custom_saude_bis/static/src/img/carteirinha.svg'"/>
+                    <t t-set="title">Carteirinha virtual</t>
+                    <t t-set="text">Apresente sua carteirinha válida nos estabelecimentos credenciados e usufrua de seus benefícios!</t>
+                    <t t-set="url" t-value="'/virtual_card'"/>
+                    <t t-set="config_card" t-value="True"/>
+                </t>
+    
+                <t t-call="portal.portal_docs_entry">
+                    <t t-set="icon" t-value="'/portal/static/src/img/portal-addresses.svg'"/>
+                    <t t-set="title">Telemedicina</t>
+                    <t t-set="text">Acesse o seu serviço médico com um profissional na tela 24 horas por dia</t>
+                    <t t-set="url" t-value="'https://parceiro.telemedicina.com'"/>
+                    <t t-set="config_card" t-value="True"/>
+                </t>
+            </div>
+            <div class="o_portal_category row g-2 mt-3">
+                <t t-call="portal.portal_docs_entry">
+                    <t t-set="icon" t-value="'/portal/static/src/img/portal-addresses.svg'"/>
+                    <t t-set="title">Dependentes</t>
+                    <t t-set="text">Inclua até 3 dependentes para usufruir dos benefícios da sua assinatura Premium</t>
+                    <t t-set="url" t-value="'/dependents?partner_id=' + str(user_id.partner_id.id)"/>
+                    <t t-set="config_card" t-value="True"/>
+                </t>
+                <!-- <a t-attf-href="/dependents?partner_id={{user_id.partner_id.id}}" class="btn btn-primary flex-grow-1 btn-lg" style="margin-left: 20px;">TET</a> -->
+            </div>
+        </xpath>
+    </template>
+
+    <!-- Template da Carteirinha Virtual -->
+    <template id="custom_saude_bis.virtual_card_template" name="Carteirinha Virtual">
+        <t t-call="website.layout">
+            <div>
+                <h1>Carteirinha Virtual</h1>
+                <p><strong>Nome:</strong> <t t-esc="user.name"/></p>
+                <p><strong>Plano:</strong> <t t-esc="user.plan_type"/></p>
+                <p><strong>Número do Documento:</strong> <t t-esc="user.document_number"/></p>
+                <p><strong>Validade:</strong> <t t-esc="user.validity_date"/></p>
+            </div>
+        </t>
+    </template>
+
+    <!-- Template da Página de Dependentes -->
+    <!-- <template id="dependents_template" name="Dependentes">
+        <t t-call="website.layout">
+            <div>
+                <h1>Dependentes</h1>
+                <t t-if="not dependents">
+                    <p>Você ainda não adicionou dependentes ao seu plano.</p>
+                </t>
+                <t t-foreach="dependents" t-as="dependent">
+                    <div>
+                        <p><strong>Nome:</strong> <t t-esc="dependent.name"/></p>
+                        <p><strong>Documento:</strong> <t t-esc="dependent.document_number"/></p>
+                    </div>
+                </t>
+                <div>
+                    <a href="/add_dependent" class="btn btn-success">Adicionar Dependente</a>
+                </div>
+            </div>
+        </t>
+    </template> -->
+
+    <!-- Template para Adicionar Dependente -->
+    <template id="add_dependent_template" name="Adicionar Dependente">
+        <t t-call="website.layout">
+            <div>
+                <h1>Adicionar Dependente</h1>
+                <form action="/submit_dependent" method="post">
+                    <div>
+                        <label for="dependent_name">Nome:</label>
+                        <input type="text" id="dependent_name" name="dependent_name" required="true"/>
+                    </div>
+                    <div>
+                        <label for="dependent_document">Documento:</label>
+                        <input type="text" id="dependent_document" name="dependent_document" required="true"/>
+                    </div>
+                    <button type="submit">Salvar</button>
+                </form>
+            </div>
+        </t>
+    </template>
+</odoo>

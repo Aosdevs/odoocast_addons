@@ -1,0 +1,42 @@
+<odoo>
+    <record id="view_res_partner_form_inherit_dependents" model="ir.ui.view">
+        <field name="name">res.partner.form.dependents</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Novo grupo com os campos plan_type e is_dependent -->
+            <xpath expr="//group[field[@name='function']]" position="after">
+                <group>
+                    <field name="plan_type"/>
+                    <field name="is_dependent"/>
+                </group>
+            </xpath>
+
+            <!-- Página Dependentes no Notebook -->
+            <xpath expr="//notebook" position="inside">
+                <page name="dependents_page" string="Dependentes">
+                    <field name="dependents" context="{'default_is_dependent': True, 'default_partner_id': id}" mode="kanban">
+                        <kanban>
+                            <field name="name"/>
+                            <field name="document_number"/>
+                            <field name="email"/>
+                            <field name="phone"/>
+                            <field name="plan_type"/>
+                            <templates>
+                                <t t-name="kanban-box">
+                                    <div class="o_kanban_card oe_kanban_global_click">
+                                        <strong><field name="name"/></strong>
+                                        <div>Email: <field name="email"/></div>
+                                        <div>Telefone: <field name="phone"/></div>
+                                        <div>Plano: <field name="plan_type"/></div>
+                                    </div>
+                                </t>
+                            </templates>
+                        </kanban>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
